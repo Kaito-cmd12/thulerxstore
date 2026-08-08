@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THULERX STORE | A Melhor Loja Gamer Roblox</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #05050A;
+            --bg-card: rgba(15, 15, 26, 0.7);
+            --bg-header: rgba(9, 10, 20, 0.85);
+            --primary: #2563EB;
+            --primary-glow: rgba(24, 95, 210, 0.5);
+            --secondary: #3B82F6;
+            --secondary-glow: rgba(59, 130, 246, 0.5);
+            --accent: #06B6D4;
+            --text-main: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border-neon: rgba(139, 92, 246, 0.25);
+            --green-glow: #10B981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.18), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.18), transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.08), transparent 50%);
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px);
+            background-size: 35px 35px;
+            opacity: .4;
+            z-index: -1;
+            animation: gridMove 25s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-35px); }
+        }
+
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toast {
+            background: linear-gradient(135deg, rgba(15, 15, 30, 0.95), rgba(25, 20, 45, 0.95));
+            border: 1px solid var(--primary);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35);
+            color: white;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .toast i {
+            color: var(--green-glow);
+            font-size: 18px;
+            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6));
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .promo-banner {
+            background: linear-gradient(90deg, #7C3AED, #2563EB, #06B6D4);
+            background-size: 200% 200%;
+            animation: gradientShift 6s ease infinite;
+            text-align: center;
+            padding: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            width: 100%;
+            padding: 16px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(20px);
+            background: var(--bg-header);
+            border-bottom: 1px solid var(--border-neon);
+            z-index: 999;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .logo span { color: var(--secondary); }
+
+        nav { display: flex; gap: 20px; align-items: center; }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: .3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--text-main);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
+
+        .cart-btn-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-neon);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            font-weight: 600;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cart-btn-btn:hover { border-color: var(--secondary); box-shadow: 0 0 15px var(--secondary-glow); }
+
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--primary);
+            color: white;
+            font-size: 11px;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero-badge {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid var(--primary);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 25px;
+            display: inline-block;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 750px;
+            margin: auto;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: .3s;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px var(--secondary-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-neon);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--secondary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            padding: 0 8% 80px 8%;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-neon);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: .3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.2);
+        }
+
+        .feature-card i {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 { font-size: 18px; margin-bottom: 8px; }
+        .feature-card p { font-size: 13px; color: var(--text-muted); }
+
+        /* Catálogo */
+        .catalog-section {
+            padding: 60px 8%;
+            border-top: 1px solid var(--border-neon);
+        }
+
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { font-size: 36px; font-weight: 800; }
+        .section-header p { color: var(--text-muted); font-size: 15px; }
+
+        .catalog-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .category-tabs { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .tab-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-neon);
+            color: var(--text-muted);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: .3s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .search-box { position: relative; min-width: 250px; }
+
+        .search-box input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-neon);
+            padding: 10px 15px 10px 40px;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-neon);
+            border-radius: 18px;
+            padding: 18px;
+            position: relative;
+            transition: .35s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.25);
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: rgba(0, 0, 0, 0.75);
+            border: 1px solid var(--border-neon);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            z-index: 2;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .product-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+        .product-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.4; }
+
+        .stock-status {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stock-available { color: var(--green-glow); }
+        .stock-low { color: #F59E0B; }
+
+        .product-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .product-price { font-size: 20px; font-weight: 800; color: #10B981; }
+
+        .product-actions { display: flex; gap: 8px; }
+
+        .action-btn-cart {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-neon);
+            color: white;
+            padding: 9px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: .3s;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .action-btn-cart:hover { border-color: var(--primary); background: rgba(139, 92, 246, 0.2); }
+
+        .action-btn-buy {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            color: white;
+            padding: 9px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: .3s;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .action-btn-buy:hover { box-shadow: 0 0 15px var(--primary-glow); }
+
+        /* Avaliações */
+        .reviews-section { padding: 60px 8%; background: rgba(0, 0, 0, 0.3); }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+        .review-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-neon);
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        .stars { color: #F59E0B; font-size: 12px; }
+
+        /* Modais */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #090B14;
+            border: 1px solid var(--primary);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            box-shadow: 0 0 40px var(--primary-glow);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .close-modal:hover { color: white; }
+
+        /* Stepper do Carrinho */
+        .cart-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .cart-steps::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border-neon);
+            z-index: 1;
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 2;
+            background: #090B14;
+            padding: 0 10px;
+            text-align: center;
+        }
+
+        .step-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #121626;
+            border: 1px solid var(--border-neon);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 5px auto;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .step-item.active .step-icon {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .step-title { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+        .step-item.active .step-title { color: white; }
+
+        /* Cards do Carrinho */
+        .cart-item-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-neon);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cart-item-img { width: 55px; height: 55px; object-fit: cover; border-radius: 8px; }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #000;
+            border: 1px solid var(--border-neon);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .qty-btn { background: none; border: none; color: white; cursor: pointer; font-weight: 800; }
+
+        /* Pix Box */
+        .pix-box {
+            background: #05070D;
+            border: 1px dashed var(--secondary);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--accent);
+        }
+
+        /* Inputs */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 12px; margin-bottom: 5px; color: var(--text-muted); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            background: #05070D;
+            border: 1px solid var(--border-neon);
+            padding: 12px;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .form-group input:focus { border-color: var(--primary); }
+
+        /* Abas Suporte e Admin */
+        .tab-nav { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-neon); padding-bottom: 10px; }
+        .tab-nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-size: 13px;
+        }
+        .tab-nav-btn.active { color: var(--primary); border-color: var(--primary); }
+
+        /* Chat Suporte UI */
+        .chat-box {
+            height: 250px;
+            background: #05070D;
+            border: 1px solid var(--border-neon);
+            border-radius: 10px;
+            padding: 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .chat-msg {
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .msg-support {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid var(--primary);
+            align-self: flex-start;
+        }
+
+        .msg-user {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid var(--secondary);
+            align-self: flex-end;
+        }
+
+        .chat-client-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-neon);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: .2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-client-item:hover { border-color: var(--primary); background: rgba(139, 92, 246, 0.1); }
+
+        /* FAQ Accordion */
+        .faq-item {
+            background: #05070D;
+            border: 1px solid var(--border-neon);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+        .faq-q { font-weight: 700; font-size: 13px; color: white; margin-bottom: 5px; }
+        .faq-a { font-size: 12px; color: var(--text-muted); }
+
+        /* Stats Cards Admin */
+        .admin-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .stat-card { background: #05070D; border: 1px solid var(--border-neon); padding: 12px; border-radius: 10px; text-align: center; }
+        .stat-card .val { font-size: 18px; font-weight: 800; color: var(--green-glow); }
+        .stat-card .lbl { font-size: 11px; color: var(--text-muted); }
+
+        /* Box de Conclusão / Avaliação */
+        .completed-chat-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10B981;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-neon);
+            padding: 40px 8%;
+            background: #030408;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        footer .socials { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; font-size: 20px; }
+        footer .socials a { color: var(--text-muted); transition: .3s; }
+        footer .socials a:hover { color: var(--primary); }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 5%; }
+            nav { display: none; }
+            .hero h1 { font-size: 42px; }
+            .hero p { font-size: 15px; }
+            .catalog-controls { flex-direction: column; align-items: stretch; }
+            .admin-stats { grid-template-columns: 1fr; }
+            .toast-container { bottom: 15px; right: 15px; left: 15px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="promo-banner">
+        🔥 CUPOM "THULERX10" PARA 10% OFF NO PIX | ATENDIMENTO RÁPIDO VIA CHAT!
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo" onclick="window.scrollTo(0,0)">
+            <div class="logo-icon"><i class="fa-solid fa-gamepad text-white"></i></div>
+            THULERX <span>STORE</span>
+        </div>
+
+        <nav>
+            <a href="#home">Início</a>
+            <a href="#catalog">Catálogo</a>
+            <a href="#reviews">Avaliações</a>
+            <a onclick="openMyOrdersModal()"><i class="fa-solid fa-box-open"></i> Meus Pedidos</a>
+            <a onclick="openSupportModal()"><i class="fa-solid fa-headset"></i> Suporte</a>
+        </nav>
+
+        <div class="nav-actions">
+            <button class="cart-btn-btn" onclick="openCart()">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+            <button class="cart-btn-btn" style="border-color: var(--primary);" id="staffBtnToggle" onclick="openStaffAuthModal()">
+                <i class="fa-solid fa-user-shield"></i> <span id="staffBtnText">Equipe</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div>
+            <div class="hero-badge">
+                <i class="fa-solid fa-bolt"></i> ENTREGA AUTOMÁTICA & IMEDIATA
+            </div>
+            <h1>
+                OS MELHORES ITENS ROBLOX<br>
+                <span>PELO MELHOR PREÇO</span>
+            </h1>
+            <p>
+                Adquira Robux, Frutas Permanentes do Blox Fruits e Itens do Grow a Garden 2 com total segurança.
+            </p>
+            <div class="hero-buttons">
+                <a href="#catalog" class="btn btn-primary">
+                    <i class="fa-solid fa-bag-shopping"></i> Ver Catálogo
+                </a>
+                <button class="btn btn-secondary" onclick="openSupportModal('chat')">
+                    <i class="fa-solid fa-comments"></i> Chat com a Equipe
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="feature-card">
+            <i class="fa-solid fa-bolt-lightning"></i>
+            <h3>Entrega Ultra Rápida</h3>
+            <p>Receba seus itens digitais em instantes após a validação.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h3>Compra 100% Segura</h3>
+            <p>Garantia total em todas as transações com dados protegidos.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-tag"></i>
+            <h3>Preços Competitivos</h3>
+            <p>As melhores ofertas atualizadas diariamente no catálogo.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-headset"></i>
+            <h3>Atendimento VIP</h3>
+            <p>Suporte humano e dedicado via chat direto no site.</p>
+        </div>
+    </section>
+
+    <!-- Catálogo -->
+    <section class="catalog-section" id="catalog">
+        <div class="section-header">
+            <h2>Catálogo Exclusivo</h2>
+            <p>Escolha seus itens favoritos e turbine seu jogo</p>
+        </div>
+
+        <div class="catalog-controls">
+            <div class="category-tabs">
+                <button class="tab-btn active" onclick="filterCategory('all')">Todos os Produtos</button>
+                <button class="tab-btn" onclick="filterCategory('Blox Fruits')">⚔️ Blox Fruits</button>
+                <button class="tab-btn" onclick="filterCategory('Grow a Garden 2')">🍎 Grow a Garden 2</button>
+                <button class="tab-btn" onclick="filterCategory('Robux')">💰 Robux</button>
+            </div>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Buscar produto...">
+            </div>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Produtos inseridos via JS -->
+        </div>
+    </section>
+
+    <!-- Avaliações -->
+    <section class="reviews-section" id="reviews">
+        <div class="section-header">
+            <h2>Avaliações de Clientes</h2>
+            <p>Veja quem já comprou e aprova a THULERX STORE</p>
+        </div>
+        <div class="reviews-grid" id="reviewsGrid">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="avatar">G</div>
+                    <div>
+                        <div style="font-weight: 700;">Gabriel S.</div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    </div>
+                </div>
+                <p style="font-size: 13px; color: var(--text-muted);">"Comprei a Kitsune permanente no Blox Fruits. Caiu super rápido na minha conta!"</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="avatar">L</div>
+                    <div>
+                        <div style="font-weight: 700;">Lucas M.</div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    </div>
+                </div>
+                <p style="font-size: 13px; color: var(--text-muted);">"Pacote de Robux com valor muito acessível e suporte via chat eficiente."</p>
+            </div>
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="avatar">M</div>
+                    <div>
+                        <div style="font-weight: 700;">Matheus R.</div>
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    </div>
+                </div>
+                <p style="font-size: 13px; color: var(--text-muted);">"Itens do Grow a Garden 2 entregues direitinho. Recomendo de olhos fechados."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="socials">
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+        <p>© 2026 THULERX STORE. Todos os direitos reservados.</p>
+        <p style="font-size: 11px; margin-top: 5px;">Não possuímos vínculo com a Roblox Corporation.</p>
+    </footer>
+
+    <!-- MODAL: LOGIN / AUTENTICAÇÃO DA EQUIPE -->
+    <div class="modal" id="staffAuthModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-modal" onclick="closeStaffAuthModal()">&times;</span>
+            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-user-shield"></i> Acesso da Equipe</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Digite a chave de acesso da equipe para gerenciar atendimentos e pedidos:</p>
+            
+            <div class="form-group">
+                <label>Senha de Acesso</label>
+                <input type="password" id="staffPassInput" placeholder="Senha da equipe (Padrão: admin123)">
+                <div id="staffPassError" style="color: #EF4444; font-size: 12px; margin-top: 6px; display: none; font-weight: 600;">
+                    <i class="fa-solid fa-circle-exclamation"></i> Senha incorreta
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="loginStaff()">
+                Entrar como Equipe
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: CARRINHO DE COMPRAS COMPLETO -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeCart()">&times;</span>
+
+            <div class="cart-steps">
+                <div class="step-item active" id="stepIndicator1">
+                    <div class="step-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+                    <div class="step-title">Carrinho</div>
+                </div>
+                <div class="step-item" id="stepIndicator2">
+                    <div class="step-icon"><i class="fa-solid fa-user"></i></div>
+                    <div class="step-title">Dados</div>
+                </div>
+                <div class="step-item" id="stepIndicator3">
+                    <div class="step-icon"><i class="fa-solid fa-qrcode"></i></div>
+                    <div class="step-title">Pagamento</div>
+                </div>
+            </div>
+
+            <!-- ETAPA 1 -->
+            <div id="cartStep1">
+                <h3 style="margin-bottom: 15px;">Seus Itens Selecionados</h3>
+                <div id="cartItemsList" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;"></div>
+
+                <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 10px; border: 1px solid var(--border-neon); margin-bottom: 15px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--text-muted); margin-bottom: 5px;">
+                        <span>Subtotal:</span>
+                        <span id="cartSubtotal">R$ 0,00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; color: #10B981; margin-bottom: 5px;">
+                        <span>Desconto Pix (10%):</span>
+                        <span id="cartDiscount">- R$ 0,00</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 18px; border-top: 1px dashed var(--border-neon); padding-top: 8px;">
+                        <span>Total Final:</span>
+                        <span id="cartTotal" style="color: #10B981;">R$ 0,00</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="goToStep(2)">
+                    Avançar para Identificação <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- ETAPA 2 -->
+            <div id="cartStep2" style="display: none;">
+                <h3 style="margin-bottom: 15px;">Dados para Entrega</h3>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-gamepad"></i> Nickname do Roblox (Obrigatório)</label>
+                    <input type="text" id="clientNick" placeholder="Ex: PlayerRoblox123">
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="btn btn-secondary" style="width: 40%; justify-content: center;" onclick="goToStep(1)">Voltar</button>
+                    <button class="btn btn-primary" style="width: 60%; justify-content: center;" onclick="goToStep(3)">Gerar Pix <i class="fa-solid fa-qrcode"></i></button>
+                </div>
+            </div>
+
+            <!-- ETAPA 3 -->
+            <div id="cartStep3" style="display: none; text-align: center;">
+                <h3 style="color: var(--secondary); margin-bottom: 5px;">Pagamento via Pix</h3>
+                <p style="font-size: 12px; color: var(--text-muted);">Copie a chave abaixo ou escaneie com seu app do banco:</p>
+
+                <div style="margin: 15px auto; width: 120px; height: 120px; background: white; padding: 8px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-qrcode" style="font-size: 90px; color: #000;"></i>
+                </div>
+
+                <div class="pix-box" id="pixKey">00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540510.005802BR5913THULERXSTORE</div>
+
+                <button class="btn btn-secondary" style="width: 100%; margin-bottom: 15px; justify-content: center;" onclick="copyPix()">
+                    <i class="fa-regular fa-copy"></i> Copiar Chave Pix
+                </button>
+
+                <div class="form-group" style="text-align: left;">
+                    <label><i class="fa-solid fa-paperclip"></i> Anexar Comprovante / Observação</label>
+                    <input type="text" id="receiptInput" placeholder="Cole o link da foto do comprovante ou mensagem">
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-secondary" style="width: 35%; justify-content: center;" onclick="goToStep(2)">Voltar</button>
+                    <button class="btn btn-primary" style="width: 65%; justify-content: center;" onclick="finishOrder()">
+                        <i class="fa-solid fa-circle-check"></i> Finalizar Compra
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL: MEUS PEDIDOS -->
+    <div class="modal" id="myOrdersModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeMyOrdersModal()">&times;</span>
+            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-box-open"></i> Consultar Meus Pedidos</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Digite seu Nickname do Roblox para visualizar suas compras recentes:</p>
+            
+            <div class="form-group" style="display: flex; gap: 8px;">
+                <input type="text" id="searchNickOrders" placeholder="Seu Nick no Roblox">
+                <button class="btn btn-primary" onclick="searchMyOrders()"><i class="fa-solid fa-search"></i></button>
+            </div>
+
+            <div id="myOrdersResults" style="max-height: 300px; overflow-y: auto;">
+                <div style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 20px;">Digite seu nick acima para pesquisar.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: SUPORTE COMPLETO (CHAT, FAQ, HORÁRIOS) -->
+    <div class="modal" id="supportModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal" onclick="closeSupportModal()">&times;</span>
+            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-headset"></i> Central de Suporte</h3>
+
+            <div class="tab-nav">
+                <button class="tab-nav-btn active" onclick="switchSupportTab('chat')" id="btnSupportChat"><i class="fa-solid fa-comments"></i> Chat ao Vivo</button>
+                <button class="tab-nav-btn" onclick="switchSupportTab('faq')" id="btnSupportFaq"><i class="fa-solid fa-circle-question"></i> Perguntas Frequentes</button>
+                <button class="tab-nav-btn" onclick="switchSupportTab('hours')" id="btnSupportHours"><i class="fa-solid fa-clock"></i> Horário & Atendimento</button>
+            </div>
+
+            <!-- TAB 1: Chat em Tempo Real -->
+            <div id="suppTabChat">
+                
+                <!-- Visão do Cliente -->
+                <div id="clientChatView">
+                    <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;" id="chatStatusLabel">💬 Atendimento com a Equipe:</div>
+                    <div class="chat-box" id="chatBox"></div>
+                    
+                    <div id="clientChatInputArea" style="display: flex; gap: 8px;">
+                        <input type="text" id="chatInput" placeholder="Digite sua dúvida ou pedido..." style="flex:1; background:#05070D; border:1px solid var(--border-neon); border-radius:8px; padding:10px; color:white; font-size:13px;" onkeypress="if(event.key==='Enter') sendChatMessage()">
+                        <button class="btn btn-primary" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+
+                    <!-- Mensagem de Conclusão / Avaliação do Cliente -->
+                    <div id="clientEvaluationArea" style="display: none;">
+                        <div class="completed-chat-box">
+                            <i class="fa-solid fa-circle-check" style="font-size: 32px; color: #10B981; margin-bottom: 8px;"></i>
+                            <h4 style="font-size: 16px; color: white;">Pedido Concluído!</h4>
+                            <p style="font-size: 12px; color: var(--text-muted); margin: 6px 0 12px 0;">Agradecemos pela sua compra na THULERX STORE! Esperamos que aproveite o seu produto.</p>
+                            
+                            <div id="evalTriggerBtn">
+                                <button class="btn btn-primary" style="margin: 0 auto; justify-content: center;" onclick="showRatingForm()">
+                                    <i class="fa-solid fa-star"></i> Avaliar Atendimento
+                                </button>
+                            </div>
+
+                            <div id="evalForm" style="display: none; margin-top: 15px; text-align: left; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px;">
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-star" style="color:#F59E0B;"></i> Dê sua nota (0/10):</label>
+                                    <select id="evalScore">
+                                        <option value="10">10 - Excelente</option>
+                                        <option value="9">9 - Muito Bom</option>
+                                        <option value="8">8 - Bom</option>
+                                        <option value="7">7 - Regular</option>
+                                        <option value="6">6</option>
+                                        <option value="5">5</option>
+                                        <option value="4">4</option>
+                                        <option value="3">3</option>
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                        <option value="0">0 - Ruim</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-comment"></i> Deixe um comentário (Opcional):</label>
+                                    <textarea id="evalComment" rows="2" placeholder="Escreva aqui sua opinião sobre o atendimento..."></textarea>
+                                </div>
+                                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="submitRating()">
+                                    Enviar Avaliação
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Visão da Equipe -->
+                <div id="staffChatView" style="display: none;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h4 style="font-size:14px; color:var(--primary);"><i class="fa-solid fa-list-check"></i> Chamados Ativos dos Clientes</h4>
+                        <button class="btn btn-secondary" style="padding:4px 10px; font-size:11px; display:none;" onclick="backToStaffList()" id="btnBackChatList"><i class="fa-solid fa-arrow-left"></i> Voltar à Lista</button>
+                    </div>
+
+                    <!-- Lista de Conversas -->
+                    <div id="staffChatsList" style="max-height:250px; overflow-y:auto;"></div>
+
+                    <!-- Chat Individual selecionado pela Equipe -->
+                    <div id="staffActiveChat" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <div style="font-size:12px; color:var(--accent);" id="selectedClientHeader">Atendendo: </div>
+                            <button class="btn btn-danger" style="padding: 4px 10px; font-size: 11px;" onclick="closeClientChatByStaff()">
+                                <i class="fa-solid fa-lock"></i> Fechar Chat / Concluir
+                            </button>
+                        </div>
+                        
+                        <div class="chat-box" id="staffChatBox"></div>
+                        <div style="display: flex; gap: 8px;" id="staffChatControls">
+                            <input type="text" id="staffChatInput" placeholder="Sua resposta para o cliente..." style="flex:1; background:#05070D; border:1px solid var(--border-neon); border-radius:8px; padding:10px; color:white; font-size:13px;" onkeypress="if(event.key==='Enter') sendStaffMessage()">
+                            <button class="btn btn-primary" onclick="sendStaffMessage()"><i class="fa-solid fa-paper-plane"></i> Responder</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB 2: FAQ -->
+            <div id="suppTabFaq" style="display: none;">
+                <div class="faq-item">
+                    <div class="faq-q"><i class="fa-solid fa-chevron-right" style="color:var(--primary); font-size:11px;"></i> Como recebo meu produto?</div>
+                    <div class="faq-a">A entrega é realizada diretamente via trade ou presente dentro do jogo após a confirmação do pagamento no chat.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q"><i class="fa-solid fa-chevron-right" style="color:var(--primary); font-size:11px;"></i> Quanto tempo demora a aprovação do Pix?</div>
+                    <div class="faq-a">A aprovação do Pix é instantânea. Basta enviar o comprovante em nosso chat se necessário.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q"><i class="fa-solid fa-chevron-right" style="color:var(--primary); font-size:11px;"></i> É seguro comprar na THULERX STORE?</div>
+                    <div class="faq-a">Sim! Todos os nossos métodos cumprem rigorosamente os termos de segurança do Roblox.</div>
+                </div>
+            </div>
+
+            <!-- TAB 3: Horários -->
+            <div id="suppTabHours" style="display: none; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+                <div style="background:#05070D; border:1px solid var(--border-neon); padding:15px; border-radius:10px;">
+                    <p style="color:white; font-weight:700; margin-bottom:8px;"><i class="fa-solid fa-clock" style="color:var(--primary);"></i> Horários de Atendimento:</p>
+                    <ul>
+                        <li><strong>Segunda a Sexta:</strong> 09:00 - 22:00</li>
+                        <li><strong>Sábados, Domingos e Feriados:</strong> 10:00 - 20:00</li>
+                    </ul>
+                    <hr style="border-color:var(--border-neon); margin:12px 0;">
+                    <p style="color:#10B981; font-weight:700;"><i class="fa-solid fa-circle text-xs"></i> Status: Atendimento Online</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL PÓS-COMPRA -->
+    <div class="modal" id="postPurchaseModal">
+        <div class="modal-content" style="text-align: center; max-width: 480px;">
+            <div style="width: 70px; height: 70px; background: rgba(16, 185, 129, 0.15); border: 2px solid #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px auto; box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);">
+                <i class="fa-solid fa-check" style="font-size: 32px; color: #10B981;"></i>
+            </div>
+            
+            <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 25px;">Pedido Registrado com Sucesso!</h3>
+            
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 14px;" onclick="goToSupportFromPurchase()">
+                Ir para o chat para receber o seu pedido no jogo <i class="fa-solid fa-comments"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL: PAINEL ADMIN -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <span class="close-modal" onclick="closeAdminModal()">&times;</span>
+            <h2 style="margin-bottom: 15px;"><i class="fa-solid fa-user-shield"></i> Painel do Administrador</h2>
+
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="val" id="statSales">R$ 0,00</div>
+                    <div class="lbl">Total em Vendas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="val" id="statOrdersCount">0</div>
+                    <div class="lbl">Pedidos Recebidos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="val" id="statProdCount">0</div>
+                    <div class="lbl">Produtos Ativos</div>
+                </div>
+            </div>
+
+            <div class="tab-nav">
+                <button class="tab-nav-btn active" onclick="switchAdminTab('products')">Produtos</button>
+                <button class="tab-nav-btn" onclick="switchAdminTab('orders')">Pedidos/Vendas</button>
+                <button class="tab-nav-btn" onclick="switchAdminTab('settings')">Configurações</button>
+            </div>
+
+            <div id="admTabProducts">
+                <h4 style="margin-bottom: 10px;">Cadastrar Novo Item</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;" class="form-group">
+                    <input type="text" id="admName" placeholder="Nome do Produto">
+                    <input type="number" id="admPrice" placeholder="Preço (R$)">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;" class="form-group">
+                    <select id="admCategory">
+                        <option value="Blox Fruits">Blox Fruits</option>
+                        <option value="Grow a Garden 2">Grow a Garden 2</option>
+                        <option value="Robux">Robux</option>
+                    </select>
+                    <select id="admStock">
+                        <option value="Disponível">Disponível</option>
+                        <option value="Últimas Unidades">Últimas Unidades</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="admImg" placeholder="URL da Imagem do Produto">
+                </div>
+                <div class="form-group">
+                    <textarea id="admDesc" placeholder="Descrição do Item..." rows="2"></textarea>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 20px;" onclick="addProductAdmin()">
+                    + Adicionar ao Catálogo
+                </button>
+
+                <h4>Produtos Cadastrados</h4>
+                <div id="adminProductList" style="max-height: 200px; overflow-y: auto; margin-top: 10px;"></div>
+            </div>
+
+            <div id="admTabOrders" style="display: none;">
+                <h4 style="margin-bottom: 10px;">Histórico de Compras</h4>
+                <div id="adminOrdersList" style="max-height: 350px; overflow-y: auto;"></div>
+            </div>
+
+            <div id="admTabSettings" style="display: none;">
+                <h4 style="margin-bottom: 15px;">Configurações Gerais</h4>
+                <div class="form-group">
+                    <label>Chave Pix da Loja</label>
+                    <input type="text" id="admPixConfig" value="00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426614174000520400005303986540510.005802BR5913THULERXSTORE">
+                </div>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="saveSettingsAdmin()">Salvar Alterações</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let products = [
+            { id: 1, name: "Kitsune Fruit (Permanente)", category: "Blox Fruits", price: 149.90, stock: "Disponível", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400", desc: "Fruta permanente Kitsune pronta para entrega na sua conta do Blox Fruits." },
+            { id: 2, name: "Pacote 4.500 Robux", category: "Robux", price: 119.90, stock: "Disponível", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400", desc: "Robux creditados via Gamepass ou Grupo com segurança total." },
+            { id: 3, name: "Mística Garden Kit", category: "Grow a Garden 2", price: 39.90, stock: "Últimas Unidades", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400", desc: "Sementes raras e ferramentas lendárias para turbinar seu jardim." },
+            { id: 4, name: "Dragon Fruit (Permanente)", category: "Blox Fruits", price: 179.90, stock: "Disponível", img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=400", desc: "Uma das frutas mais poderosas e cobiçadas do jogo." }
+        ];
+
+        let cart = [];
+        let checkoutItems = [];
+        let salesHistory = [];
+        let isStaff = false;
+        let activeStaffClientNick = null;
+
+        let supportChats = {
+            "Cliente_Visitante": {
+                closed: false,
+                evaluated: false,
+                messages: [
+                    { sender: "support", text: "👋 Olá! Bem-vindo ao atendimento da THULERX STORE. Como podemos te ajudar hoje?" }
+                ]
+            }
+        };
+
+        // NOTIFICAÇÃO TOAST NO CANTO INFERIOR DIREITO
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.3s reverse forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // GERENCIAMENTO DA EQUIPE / LOGIN
+        function openStaffAuthModal() {
+            if (isStaff) {
+                if (confirm('Deseja sair do modo Equipe?')) {
+                    isStaff = false;
+                    document.getElementById('staffBtnText').innerText = 'Equipe';
+                    document.getElementById('staffBtnToggle').style.borderColor = 'var(--border-neon)';
+                    showToast('Você saiu do modo Equipe.');
+                }
+            } else {
+                document.getElementById('staffPassError').style.display = 'none';
+                document.getElementById('staffAuthModal').style.display = 'flex';
+            }
+        }
+
+        function closeStaffAuthModal() { 
+            document.getElementById('staffAuthModal').style.display = 'none'; 
+        }
+
+        function loginStaff() {
+            const pass = document.getElementById('staffPassInput').value;
+            const errEl = document.getElementById('staffPassError');
+
+            if (pass === 'admin123' || pass === 'admin') {
+                isStaff = true;
+                errEl.style.display = 'none';
+                document.getElementById('staffPassInput').value = '';
+                closeStaffAuthModal();
+                document.getElementById('staffBtnText').innerText = 'Equipe (Online)';
+                document.getElementById('staffBtnToggle').style.borderColor = 'var(--green-glow)';
+                showToast('🔑 Acesso liberado! Bem-vindo, Atendente.');
+                openAdminModal();
+            } else {
+                errEl.style.display = 'block';
+            }
+        }
+
+        function renderProducts(itemsToRender = products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            itemsToRender.forEach(p => {
+                const stockClass = p.stock === 'Disponível' ? 'stock-available' : 'stock-low';
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <span class="product-tag">${p.category}</span>
+                        <img src="${p.img}" alt="${p.name}" class="product-img">
+                        <div class="product-title">${p.name}</div>
+                        <div class="product-desc">${p.desc}</div>
+                        <div class="stock-status ${stockClass}">
+                            <i class="fa-solid fa-box"></i> ${p.stock}
+                        </div>
+                        <div class="product-bottom">
+                            <div class="product-price">R$ ${p.price.toFixed(2).replace('.', ',')}</div>
+                            <div class="product-actions">
+                                <button class="action-btn-cart" onclick="addToCart(${p.id})">
+                                    <i class="fa-solid fa-cart-plus"></i> + Carrinho
+                                </button>
+                                <button class="action-btn-buy" onclick="buyNow(${p.id})">
+                                    Comprar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            updateAdminStats();
+        }
+
+        function filterCategory(cat) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            if (cat === 'all') renderProducts(products);
+            else renderProducts(products.filter(p => p.category === cat));
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            renderProducts(products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)));
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const cartItem = cart.find(item => item.id === id);
+
+            if (cartItem) cartItem.qty += 1;
+            else cart.push({ ...product, qty: 1 });
+
+            updateCartUI();
+            showToast(`Item "${product.name}" adicionado ao carrinho!`);
+        }
+
+        function buyNow(id) {
+            const product = products.find(p => p.id === id);
+            checkoutItems = [{ ...product, qty: 1 }];
+            openCart(true);
+        }
+
+        function changeQty(index, delta, isBuyNow = false) {
+            const list = isBuyNow ? checkoutItems : cart;
+            list[index].qty += delta;
+            if (list[index].qty <= 0) list.splice(index, 1);
+            updateCartUI(isBuyNow);
+        }
+
+        function updateCartUI(isBuyNow = false) {
+            const list = isBuyNow ? checkoutItems : cart;
+            const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
+            document.getElementById('cartCount').innerText = totalCount;
+
+            const cartList = document.getElementById('cartItemsList');
+            cartList.innerHTML = '';
+
+            let subtotal = 0;
+            if (list.length === 0) {
+                cartList.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">Nenhum item selecionado.</div>`;
+            } else {
+                list.forEach((item, index) => {
+                    subtotal += item.price * item.qty;
+                    cartList.innerHTML += `
+                        <div class="cart-item-card">
+                            <img src="${item.img}" class="cart-item-img">
+                            <div style="flex:1;">
+                                <div style="font-size:13px; font-weight:700;">${item.name}</div>
+                                <div style="font-size:12px; color:#10B981; font-weight:700;">R$ ${(item.price * item.qty).toFixed(2)}</div>
+                            </div>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="changeQty(${index}, -1, ${isBuyNow})">-</button>
+                                <span style="font-size:12px; font-weight:700;">${item.qty}</span>
+                                <button class="qty-btn" onclick="changeQty(${index}, 1, ${isBuyNow})">+</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            const discount = subtotal * 0.10;
+            const total = subtotal - discount;
+
+            document.getElementById('cartSubtotal').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('cartDiscount').innerText = `- R$ ${discount.toFixed(2).replace('.', ',')}`;
+            document.getElementById('cartTotal').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        function goToStep(step) {
+            const activeList = checkoutItems.length > 0 ? checkoutItems : cart;
+            if (step === 2 && activeList.length === 0) {
+                alert('Nenhum item selecionado!');
+                return;
+            }
+            if (step === 3) {
+                const nick = document.getElementById('clientNick').value;
+                if (!nick) {
+                    alert('Por favor, digite seu Nick do Roblox para continuar!');
+                    return;
+                }
+            }
+
+            document.getElementById('cartStep1').style.display = step === 1 ? 'block' : 'none';
+            document.getElementById('cartStep2').style.display = step === 2 ? 'block' : 'none';
+            document.getElementById('cartStep3').style.display = step === 3 ? 'block' : 'none';
+
+            document.getElementById('stepIndicator1').className = `step-item ${step >= 1 ? 'active' : ''}`;
+            document.getElementById('stepIndicator2').className = `step-item ${step >= 2 ? 'active' : ''}`;
+            document.getElementById('stepIndicator3').className = `step-item ${step >= 3 ? 'active' : ''}`;
+        }
+
+        function openCart(isBuyNow = false) { 
+            if (!isBuyNow) checkoutItems = [];
+            updateCartUI(isBuyNow);
+            goToStep(1);
+            document.getElementById('cartModal').style.display = 'flex'; 
+        }
+
+        function closeCart() { document.getElementById('cartModal').style.display = 'none'; }
+
+        function copyPix() {
+            const pixText = document.getElementById('pixKey').innerText;
+            navigator.clipboard.writeText(pixText);
+            showToast('Chave Pix Copiada com sucesso!');
+        }
+
+        function finishOrder() {
+            const nick = document.getElementById('clientNick').value.trim();
+            const receipt = document.getElementById('receiptInput').value;
+            const itemsToBuy = checkoutItems.length > 0 ? checkoutItems : cart;
+
+            const total = itemsToBuy.reduce((acc, item) => acc + (item.price * item.qty), 0) * 0.90;
+
+            const order = {
+                id: Date.now(),
+                nick, receipt,
+                total, items: [...itemsToBuy],
+                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
+            };
+
+            salesHistory.push(order);
+
+            if (!supportChats[nick]) {
+                supportChats[nick] = {
+                    closed: false,
+                    evaluated: false,
+                    messages: [
+                        { sender: "support", text: `👋 Olá ${nick}! Recebemos seu pedido #${order.id.toString().slice(-5)}. Em que podemos ajudar com a entrega?` }
+                    ]
+                };
+            } else {
+                supportChats[nick].closed = false;
+            }
+
+            if (checkoutItems.length > 0) checkoutItems = [];
+            else cart = [];
+
+            updateCartUI();
+            closeCart();
+            updateAdminStats();
+
+            document.getElementById('postPurchaseModal').style.display = 'flex';
+        }
+
+        function closePostPurchaseModal() {
+            document.getElementById('postPurchaseModal').style.display = 'none';
+        }
+
+        function goToSupportFromPurchase() {
+            closePostPurchaseModal();
+            openSupportModal('chat');
+        }
+
+        /* Meus Pedidos */
+        function openMyOrdersModal() { document.getElementById('myOrdersModal').style.display = 'flex'; }
+        function closeMyOrdersModal() { document.getElementById('myOrdersModal').style.display = 'none'; }
+
+        function searchMyOrders() {
+            const nick = document.getElementById('searchNickOrders').value.toLowerCase().trim();
+            const res = document.getElementById('myOrdersResults');
+
+            if (!nick) {
+                res.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">Por favor, informe seu nick.</div>`;
+                return;
+            }
+
+            const myOrders = salesHistory.filter(o => o.nick.toLowerCase() === nick);
+
+            if (myOrders.length === 0) {
+                res.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">Nenhum pedido encontrado para o nick "<strong>${nick}</strong>".</div>`;
+                return;
+            }
+
+            res.innerHTML = '';
+            myOrders.forEach(o => {
+                let itemsHtml = o.items.map(i => `${i.name} (x${i.qty})`).join(', ');
+                res.innerHTML += `
+                    <div style="background:#05070D; border:1px solid var(--border-neon); padding:12px; border-radius:10px; margin-bottom:10px; font-size:12px;">
+                        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:5px;">
+                            <span>Pedido #${o.id.toString().slice(-5)}</span>
+                            <span style="color:#10B981;">R$ ${o.total.toFixed(2)}</span>
+                        </div>
+                        <div style="color:var(--text-muted); margin-bottom:4px;">Itens: ${itemsHtml}</div>
+                        <div style="font-size:11px; color:var(--accent);">Data: ${o.date}</div>
+                    </div>
+                `;
+            });
+        }
+
+        /* Suporte */
+        function openSupportModal(tab = 'chat') {
+            document.getElementById('supportModal').style.display = 'flex';
+            switchSupportTab(tab);
+        }
+        function closeSupportModal() { document.getElementById('supportModal').style.display = 'none'; }
+
+        function switchSupportTab(tab) {
+            document.getElementById('btnSupportChat').classList.toggle('active', tab === 'chat');
+            document.getElementById('btnSupportFaq').classList.toggle('active', tab === 'faq');
+            document.getElementById('btnSupportHours').classList.toggle('active', tab === 'hours');
+
+            document.getElementById('suppTabChat').style.display = tab === 'chat' ? 'block' : 'none';
+            document.getElementById('suppTabFaq').style.display = tab === 'faq' ? 'block' : 'none';
+            document.getElementById('suppTabHours').style.display = tab === 'hours' ? 'block' : 'none';
+
+            if (tab === 'chat') {
+                if (isStaff) {
+                    document.getElementById('clientChatView').style.display = 'none';
+                    document.getElementById('staffChatView').style.display = 'block';
+                    renderStaffChatList();
+                } else {
+                    document.getElementById('clientChatView').style.display = 'block';
+                    document.getElementById('staffChatView').style.display = 'none';
+                    renderClientChat();
+                }
+            }
+        }
+
+        function getCurrentUserNick() {
+            const inputNick = document.getElementById('clientNick').value.trim();
+            return inputNick || "Cliente_Visitante";
+        }
+
+        function renderClientChat() {
+            const userKey = getCurrentUserNick();
+            if (!supportChats[userKey]) {
+                supportChats[userKey] = {
+                    closed: false,
+                    evaluated: false,
+                    messages: [
+                        { sender: "support", text: `👋 Olá! Bem-vindo ao suporte da THULERX STORE. Como podemos te ajudar?` }
+                    ]
+                };
+            }
+
+            const box = document.getElementById('chatBox');
+            box.innerHTML = '';
+            const chatData = supportChats[userKey];
+
+            chatData.messages.forEach(msg => {
+                const msgClass = msg.sender === 'user' ? 'msg-user' : 'msg-support';
+                box.innerHTML += `<div class="chat-msg ${msgClass}">${msg.text}</div>`;
+            });
+            box.scrollTop = box.scrollHeight;
+
+            if (chatData.closed) {
+                document.getElementById('clientChatInputArea').style.display = 'none';
+                document.getElementById('clientEvaluationArea').style.display = 'block';
+            } else {
+                document.getElementById('clientChatInputArea').style.display = 'flex';
+                document.getElementById('clientEvaluationArea').style.display = 'none';
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const txt = input.value.trim();
+            if (!txt) return;
+
+            const userKey = getCurrentUserNick();
+            if (!supportChats[userKey]) {
+                supportChats[userKey] = { closed: false, evaluated: false, messages: [] };
+            }
+
+            supportChats[userKey].messages.push({ sender: 'user', text: txt });
+            input.value = '';
+            renderClientChat();
+        }
+
+        function showRatingForm() {
+            document.getElementById('evalTriggerBtn').style.display = 'none';
+            document.getElementById('evalForm').style.display = 'block';
+        }
+
+        function submitRating() {
+            const score = document.getElementById('evalScore').value;
+            const comment = document.getElementById('evalComment').value.trim();
+            const nick = getCurrentUserNick();
+
+            const reviewsGrid = document.getElementById('reviewsGrid');
+            const initialLetter = nick.charAt(0).toUpperCase() || 'C';
+
+            let starsCount = Math.round(score / 2);
+            if (starsCount < 1) starsCount = 1;
+            let starsHtml = '';
+            for (let i = 0; i < starsCount; i++) {
+                starsHtml += '<i class="fa-solid fa-star"></i>';
+            }
+
+            const newReviewHtml = `
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="avatar">${initialLetter}</div>
+                        <div>
+                            <div style="font-weight: 700;">${nick} (Nota: ${score}/10)</div>
+                            <div class="stars">${starsHtml}</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; color: var(--text-muted);">${comment ? `"${comment}"` : '"Atendimento excelente!"'}</p>
+                </div>
+            `;
+
+            reviewsGrid.insertAdjacentHTML('afterbegin', newReviewHtml);
+
+            if (supportChats[nick]) {
+                supportChats[nick].evaluated = true;
+            }
+
+            document.getElementById('clientEvaluationArea').innerHTML = `
+                <div class="completed-chat-box">
+                    <i class="fa-solid fa-heart" style="font-size:32px; color:#10B981; margin-bottom:8px;"></i>
+                    <h4 style="font-size:16px; color:white;">Obrigado por avaliar!</h4>
+                    <p style="font-size:12px; color:var(--text-muted); margin-top:5px;">Sua opinião nos ajuda a melhorar cada vez mais!</p>
+                </div>
+            `;
+
+            showToast('Avaliação enviada com sucesso!');
+        }
+
+        function renderStaffChatList() {
+            const list = document.getElementById('staffChatsList');
+            list.innerHTML = '';
+
+            const keys = Object.keys(supportChats);
+            if (keys.length === 0) {
+                list.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">Nenhum chamado pendente.</div>`;
+                return;
+            }
+
+            keys.forEach(nick => {
+                const chatData = supportChats[nick];
+                const msgs = chatData.messages;
+                const lastMsg = msgs[msgs.length - 1] ? msgs[msgs.length - 1].text : "Sem mensagens";
+                const statusBadge = chatData.closed ? '<span style="color:#EF4444; font-size:10px;">[Concluído]</span>' : '<span style="color:#10B981; font-size:10px;">[Aberto]</span>';
+
+                list.innerHTML += `
+                    <div class="chat-client-item" onclick="openStaffClientChat('${nick}')">
+                        <div>
+                            <div style="font-weight:700; font-size:13px; color:white;"><i class="fa-solid fa-user"></i> ${nick} ${statusBadge}</div>
+                            <div style="font-size:11px; color:var(--text-muted);">${lastMsg.slice(0, 35)}...</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right" style="color:var(--primary);"></i>
+                    </div>
+                `;
+            });
+
+            document.getElementById('staffChatsList').style.display = 'block';
+            document.getElementById('staffActiveChat').style.display = 'none';
+            document.getElementById('btnBackChatList').style.display = 'none';
+        }
+
+        function openStaffClientChat(nick) {
+            activeStaffClientNick = nick;
+            document.getElementById('selectedClientHeader').innerText = `Atendendo: ${nick}`;
+            document.getElementById('staffChatsList').style.display = 'none';
+            document.getElementById('staffActiveChat').style.display = 'block';
+            document.getElementById('btnBackChatList').style.display = 'inline-block';
+            renderStaffMessages();
+        }
+
+        function backToStaffList() {
+            activeStaffClientNick = null;
+            renderStaffChatList();
+        }
+
+        function renderStaffMessages() {
+            if (!activeStaffClientNick || !supportChats[activeStaffClientNick]) return;
+
+            const box = document.getElementById('staffChatBox');
+            box.innerHTML = '';
+            const chatData = supportChats[activeStaffClientNick];
+
+            chatData.messages.forEach(msg => {
+                const msgClass = msg.sender === 'support' ? 'msg-user' : 'msg-support';
+                box.innerHTML += `<div class="chat-msg ${msgClass}">${msg.text}</div>`;
+            });
+            box.scrollTop = box.scrollHeight;
+
+            if (chatData.closed) {
+                document.getElementById('staffChatControls').style.display = 'none';
+            } else {
+                document.getElementById('staffChatControls').style.display = 'flex';
+            }
+        }
+
+        function sendStaffMessage() {
+            const input = document.getElementById('staffChatInput');
+            const txt = input.value.trim();
+            if (!txt || !activeStaffClientNick) return;
+
+            supportChats[activeStaffClientNick].messages.push({ sender: 'support', text: txt });
+            input.value = '';
+            renderStaffMessages();
+        }
+
+        function closeClientChatByStaff() {
+            if (!activeStaffClientNick || !supportChats[activeStaffClientNick]) return;
+
+            if (confirm(`Deseja fechar o chat e concluir o pedido de "${activeStaffClientNick}"?`)) {
+                supportChats[activeStaffClientNick].closed = true;
+                supportChats[activeStaffClientNick].messages.push({
+                    sender: 'support',
+                    text: '✅ O atendimento foi finalizado e seu pedido foi concluído! Agradecemos a preferência.'
+                });
+
+                renderStaffMessages();
+                showToast(`Chat de ${activeStaffClientNick} concluído!`);
+            }
+        }
+
+        /* Admin */
+        function openAdminModal() {
+            if (!isStaff) {
+                openStaffAuthModal();
+                return;
+            }
+            document.getElementById('adminModal').style.display = 'flex';
+            renderAdminProducts();
+            renderAdminOrders();
+        }
+        function closeAdminModal() { document.getElementById('adminModal').style.display = 'none'; }
+
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.tab-nav-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('admTabProducts').style.display = tab === 'products' ? 'block' : 'none';
+            document.getElementById('admTabOrders').style.display = tab === 'orders' ? 'block' : 'none';
+            document.getElementById('admTabSettings').style.display = tab === 'settings' ? 'block' : 'none';
+        }
+
+        function renderAdminProducts() {
+            const list = document.getElementById('adminProductList');
+            list.innerHTML = '';
+            products.forEach(p => {
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; background:#05070D; padding:10px; border-radius:8px; margin-bottom:6px; font-size:12px;">
+                        <span><strong>${p.name}</strong> (${p.category}) - <span style="color:#10B981;">R$ ${p.price.toFixed(2)}</span></span>
+                        <button style="background:#EF4444; border:none; color:white; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteProductAdmin(${p.id})">Excluir</button>
+                    </div>
+                `;
+            });
+        }
+
+        function renderAdminOrders() {
+            const list = document.getElementById('adminOrdersList');
+            list.innerHTML = '';
+
+            if (salesHistory.length === 0) {
+                list.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">Nenhum pedido realizado ainda.</div>`;
+                return;
+            }
+
+            salesHistory.forEach(o => {
+                list.innerHTML += `
+                    <div style="background:#05070D; border:1px solid var(--border-neon); padding:12px; border-radius:10px; margin-bottom:10px; font-size:12px;">
+                        <div style="display:flex; justify-content:space-between; font-weight:700;">
+                            <span>Cliente: ${o.nick}</span>
+                            <span style="color:#10B981;">R$ ${o.total.toFixed(2)}</span>
+                        </div>
+                        <div style="color:var(--accent); margin-top:4px;">Comprovante: ${o.receipt || 'Nenhum'}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function addProductAdmin() {
+            const name = document.getElementById('admName').value;
+            const price = parseFloat(document.getElementById('admPrice').value);
+            const category = document.getElementById('admCategory').value;
+            const stock = document.getElementById('admStock').value;
+            const img = document.getElementById('admImg').value || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400";
+            const desc = document.getElementById('admDesc').value;
+
+            if (!name || !price) {
+                alert('Informe Nome e Preço do produto!');
+                return;
+            }
+
+            products.push({ id: Date.now(), name, price, category, stock, img, desc });
+            renderProducts();
+            renderAdminProducts();
+            showToast('Produto cadastrado com sucesso!');
+        }
+
+        function deleteProductAdmin(id) {
+            products = products.filter(p => p.id !== id);
+            renderProducts();
+            renderAdminProducts();
+            showToast('Produto removido.');
+        }
+
+        function saveSettingsAdmin() {
+            const key = document.getElementById('admPixConfig').value;
+            document.getElementById('pixKey').innerText = key;
+            showToast('Configurações salvas!');
+        }
+
+        function updateAdminStats() {
+            const totalSales = salesHistory.reduce((acc, o) => acc + o.total, 0);
+            document.getElementById('statSales').innerText = `R$ ${totalSales.toFixed(2)}`;
+            document.getElementById('statOrdersCount').innerText = salesHistory.length;
+            document.getElementById('statProdCount').innerText = products.length;
+        }
+
+        renderProducts();
+    </script>
+</body>
+
+</html>
