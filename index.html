@@ -20,7 +20,7 @@
             --bg-card-hover: rgba(22, 30, 61, 0.85);
             --accent-blue: #00f0ff;
             --accent-blue-deep: #0066ff;
-            --accent-purple: #0091ff;
+            --accent-purple: #7000ff;
             --text-main: #f0f4f8;
             --text-muted: #8a99ad;
             --border-glow: rgba(0, 240, 255, 0.25);
@@ -47,37 +47,29 @@
             min-height: 100vh;
         }
 
-        /* Fundo Animado / Canvas de Partículas */
         #bg-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2;
             pointer-events: none;
         }
 
         .ambient-glow {
             position: fixed;
-            width: 600px;
-            height: 600px;
+            width: 600px; height: 600px;
             background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            top: -200px;
-            left: 50%;
+            top: -200px; left: 50%;
             transform: translateX(-50%);
             z-index: -1;
             pointer-events: none;
             filter: blur(80px);
         }
 
-        /* Cursor Personalizado */
         @media (min-width: 992px) {
             * { cursor: default; }
             button, a, .interactive { cursor: pointer; }
             .custom-cursor {
-                width: 12px;
-                height: 12px;
+                width: 12px; height: 12px;
                 background: var(--accent-blue);
                 border-radius: 50%;
                 position: fixed;
@@ -88,8 +80,7 @@
                 transform: translate(-50%, -50%);
             }
             .custom-cursor-follower {
-                width: 36px;
-                height: 36px;
+                width: 36px; height: 36px;
                 border: 1px solid rgba(0, 240, 255, 0.5);
                 border-radius: 50%;
                 position: fixed;
@@ -100,18 +91,12 @@
             }
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
         ::-webkit-scrollbar-thumb { background: #161e3d; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue-deep); }
 
-        /* Utilitários */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
 
         .btn {
             background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-blue));
@@ -132,6 +117,7 @@
             overflow: hidden;
             text-decoration: none;
             box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
+            cursor: pointer;
         }
 
         .btn:hover {
@@ -183,7 +169,6 @@
             font-size: 1rem;
         }
 
-        /* Glassmorphism Panel */
         .glass-panel {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -193,9 +178,7 @@
             transition: var(--transition-fast);
         }
 
-        /* ==========================================================================
-           2. TELA DE CARREGAMENTO (LOADING)
-           ========================================================================== */
+        /* PRELOADER */
         #preloader {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -218,8 +201,7 @@
         }
 
         .loader-bar {
-            width: 200px;
-            height: 4px;
+            width: 200px; height: 4px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             overflow: hidden;
@@ -227,8 +209,7 @@
         }
 
         .loader-progress {
-            width: 0%;
-            height: 100%;
+            width: 0%; height: 100%;
             background: linear-gradient(90deg, var(--accent-blue-deep), var(--accent-blue));
             box-shadow: 0 0 10px var(--accent-blue);
             animation: load 1.8s ease-in-out forwards;
@@ -240,9 +221,7 @@
             100% { width: 100%; }
         }
 
-        /* ==========================================================================
-           3. NAVBAR E NOTIFICAÇÕES
-           ========================================================================== */
+        /* NAVBAR */
         .navbar {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -325,6 +304,8 @@
             justify-content: center;
             position: relative;
             transition: var(--transition-fast);
+            cursor: pointer;
+            text-decoration: none;
         }
 
         .icon-btn:hover {
@@ -353,9 +334,10 @@
             background: none;
             border: none;
             color: #fff;
+            cursor: pointer;
         }
 
-        /* Dropdown Notificações */
+        /* DROPDOWN NOTIFICAÇÕES */
         .notif-dropdown {
             position: absolute;
             top: 55px; right: 0;
@@ -375,11 +357,11 @@
             padding: 10px 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
             font-size: 0.85rem;
+            text-align: left;
         }
         .notif-item:last-child { border-bottom: none; }
         .notif-item small { color: var(--text-muted); display: block; margin-top: 4px; }
 
-        /* Toast Popup de Alerta */
         #toast-container {
             position: fixed;
             bottom: 20px; right: 20px;
@@ -405,9 +387,7 @@
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
         @keyframes fadeOut { to { opacity: 0; transform: translateY(10px); } }
 
-        /* ==========================================================================
-           4. HERO SECTION
-           ========================================================================== */
+        /* HERO SECTION */
         .hero {
             padding: 180px 0 100px;
             position: relative;
@@ -499,13 +479,12 @@
             margin-bottom: 20px;
         }
 
-        /* ==========================================================================
-           5. BARRA DE CONFIANÇA & ESTATÍSTICAS
-           ========================================================================== */
+        /* CONFIANÇA & ESTATÍSTICAS */
         .trust-bar {
             padding: 30px 0;
             background: rgba(13, 18, 38, 0.4);
-            border-y: 1px solid var(--border-light);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
             margin-bottom: 80px;
         }
 
@@ -525,25 +504,11 @@
             border-radius: 12px;
         }
 
-        .trust-item i {
-            font-size: 1.8rem;
-            color: var(--accent-blue);
-        }
+        .trust-item i { font-size: 1.8rem; color: var(--accent-blue); }
+        .trust-item h4 { font-size: 0.95rem; font-weight: 700; text-transform: uppercase; }
+        .trust-item p { font-size: 0.8rem; color: var(--text-muted); }
 
-        .trust-item h4 {
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .trust-item p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .stats-section {
-            padding: 40px 0 80px;
-        }
+        .stats-section { padding: 40px 0 80px; }
 
         .stats-grid {
             display: grid;
@@ -576,12 +541,8 @@
             text-transform: uppercase;
         }
 
-        /* ==========================================================================
-           6. CATÁLOGO, PESQUISA E FILTROS
-           ========================================================================== */
-        .catalog-section {
-            padding: 60px 0;
-        }
+        /* CATÁLOGO E FILTROS */
+        .catalog-section { padding: 60px 0; }
 
         .search-filter-bar {
             display: flex;
@@ -625,11 +586,7 @@
             color: var(--text-muted);
         }
 
-        .filter-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+        .filter-options { display: flex; gap: 15px; flex-wrap: wrap; }
 
         .filter-select {
             background: rgba(7, 9, 19, 0.8);
@@ -671,7 +628,6 @@
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
 
-        /* GRID DE PRODUTOS */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -711,6 +667,7 @@
             font-size: 1.2rem;
             color: var(--text-muted);
             transition: var(--transition-fast);
+            cursor: pointer;
         }
 
         .fav-btn.active, .fav-btn:hover {
@@ -720,11 +677,8 @@
         }
 
         .product-img-wrapper {
-            height: 160px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 160px; width: 100%;
+            display: flex; align-items: center; justify-content: center;
             margin-bottom: 15px;
             position: relative;
         }
@@ -735,18 +689,8 @@
             filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.4));
         }
 
-        .product-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-            font-weight: 700;
-        }
-
-        .product-info p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
+        .product-info h3 { font-size: 1.1rem; margin-bottom: 6px; font-weight: 700; }
+        .product-info p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.4; }
 
         .price-row {
             display: flex;
@@ -755,17 +699,8 @@
             margin-bottom: 15px;
         }
 
-        .price-current {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .price-old {
-            font-size: 0.9rem;
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
+        .price-current { font-size: 1.4rem; font-weight: 800; color: #fff; }
+        .price-old { font-size: 0.9rem; text-decoration: line-through; color: var(--text-muted); }
 
         .stock-tag {
             font-size: 0.75rem;
@@ -779,17 +714,12 @@
         .stock-tag.in-stock i { color: #00e676; }
         .stock-tag.out-stock i { color: #ff3366; }
 
-        /* ==========================================================================
-           7. OFERTAS ESPECIAIS
-           ========================================================================== */
         .offers-section {
             padding: 60px 0;
             background: linear-gradient(180deg, rgba(7,9,19,0) 0%, rgba(0,102,255,0.05) 50%, rgba(7,9,19,0) 100%);
         }
 
-        /* ==========================================================================
-           8. CARRINHO DE COMPRAS & CHECKOUT MODAL
-           ========================================================================== */
+        /* CARRINHO */
         .cart-drawer {
             position: fixed;
             top: 0; right: -420px;
@@ -815,17 +745,14 @@
             border-bottom: 1px solid var(--border-light);
         }
 
-        .cart-header h3 {
-            font-family: var(--font-heading);
-            font-size: 2rem;
-            letter-spacing: 1px;
-        }
+        .cart-header h3 { font-family: var(--font-heading); font-size: 2rem; letter-spacing: 1px; }
 
         .close-cart {
             background: none;
             border: none;
             font-size: 1.5rem;
             color: var(--text-muted);
+            cursor: pointer;
         }
 
         .cart-items {
@@ -863,6 +790,7 @@
             border: none;
             border-radius: 4px;
             color: #fff;
+            cursor: pointer;
         }
 
         .cart-footer {
@@ -891,7 +819,7 @@
 
         .overlay.active { opacity: 1; pointer-events: all; }
 
-        /* Checkout Modal */
+        /* MODAIS */
         .modal {
             position: fixed;
             top: 50%; left: 50%;
@@ -925,9 +853,7 @@
 
         .pix-container i { font-size: 8rem; color: #000; }
 
-        /* ==========================================================================
-           9. COMO FUNCIONA, FAQ & SUPORTE
-           ========================================================================== */
+        /* COMO FUNCIONA E FAQ */
         .how-it-works { padding: 80px 0; }
 
         .steps-grid {
@@ -954,11 +880,7 @@
             top: 10px; right: 20px;
         }
 
-        .step-card i {
-            font-size: 2rem;
-            color: var(--accent-blue);
-            margin-bottom: 15px;
-        }
+        .step-card i { font-size: 2rem; color: var(--accent-blue); margin-bottom: 15px; }
 
         .faq-section { padding: 80px 0; }
 
@@ -997,9 +919,7 @@
         .faq-item.active .faq-answer { display: block; }
         .faq-item.active .faq-question i { transform: rotate(180deg); color: var(--accent-blue); }
 
-        /* ==========================================================================
-           10. PERFIL DO USUÁRIO & BADGES
-           ========================================================================== */
+        /* PERFIL DO USUÁRIO */
         .profile-section { padding: 80px 0; }
 
         .profile-card {
@@ -1068,16 +988,24 @@
             border: 1px solid var(--border-light);
         }
 
-        /* ==========================================================================
-           11. PAINEL ADMIN (INTERFACE VISUAL)
-           ========================================================================== */
+        /* PAINEL ADMIN COM AUTENTICAÇÃO */
         .admin-section {
             padding: 80px 0;
             border-top: 1px dashed var(--border-light);
         }
 
+        .admin-lock-screen {
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
         .admin-grid {
-            display: grid;
+            display: none;
             grid-template-columns: 220px 1fr;
             gap: 30px;
             background: var(--bg-card);
@@ -1085,6 +1013,8 @@
             padding: 25px;
             border: 1px solid var(--border-glow);
         }
+
+        .admin-grid.unlocked { display: grid; }
 
         .admin-sidebar {
             display: flex;
@@ -1103,6 +1033,7 @@
             color: var(--text-muted);
             border-radius: 8px;
             transition: var(--transition-fast);
+            cursor: pointer;
         }
 
         .admin-menu-btn.active, .admin-menu-btn:hover {
@@ -1110,9 +1041,7 @@
             color: var(--accent-blue);
         }
 
-        /* ==========================================================================
-           12. FOOTER & RESPONSIVIDADE
-           ========================================================================== */
+        /* FOOTER & RESPONSIVIDADE */
         footer {
             background: #04060d;
             border-top: 1px solid var(--border-light);
@@ -1182,15 +1111,12 @@
 </head>
 <body>
 
-    <!-- CURSOR PERSONALIZADO (DESKTOP) -->
     <div class="custom-cursor"></div>
     <div class="custom-cursor-follower"></div>
 
-    <!-- CANVAS DE FUNDO ANIMADO -->
     <canvas id="bg-canvas"></canvas>
     <div class="ambient-glow"></div>
 
-    <!-- PRELOADER / LOADING -->
     <div id="preloader">
         <div class="loader-logo">THULERX<span>STORE</span></div>
         <div class="loader-bar">
@@ -1198,28 +1124,23 @@
         </div>
     </div>
 
-    <!-- TOAST CONTAINER PARA NOTIFICAÇÕES FLUTUANTES -->
     <div id="toast-container"></div>
-
-    <!-- OVERLAY ESCURO -->
     <div class="overlay" id="overlay" onclick="closeAllModals()"></div>
 
-    <!-- ==========================================================================
-       NAVBAR
-       ========================================================================== -->
+    <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
-            <a href="#" class="logo">
+            <a href="#home" class="logo">
                 <i class="fa-solid fa-gamepad" style="color: var(--accent-blue);"></i>
                 THULERX<span>STORE</span>
             </a>
 
             <ul class="nav-links" id="nav-links">
-                <li><a href="#home" class="active">Início</a></li>
-                <li><a href="#catalog">Produtos</a></li>
-                <li><a href="#reviews">Avaliações</a></li>
-                <li><a href="#how-it-works">Como Funciona</a></li>
-                <li><a href="#support">Suporte</a></li>
+                <li><a href="#home" class="active" onclick="closeMobileMenu()">Início</a></li>
+                <li><a href="#catalog" onclick="closeMobileMenu()">Produtos</a></li>
+                <li><a href="#reviews" onclick="closeMobileMenu()">Avaliações</a></li>
+                <li><a href="#how-it-works" onclick="closeMobileMenu()">Como Funciona</a></li>
+                <li><a href="#support" onclick="closeMobileMenu()">Suporte</a></li>
             </ul>
 
             <div class="nav-actions">
@@ -1256,9 +1177,7 @@
         </div>
     </nav>
 
-    <!-- ==========================================================================
-       HERO SECTION
-       ========================================================================== -->
+    <!-- HERO SECTION -->
     <section class="hero" id="home">
         <div class="container hero-grid">
             <div class="hero-content">
@@ -1281,9 +1200,7 @@
         </div>
     </section>
 
-    <!-- ==========================================================================
-       BARRA DE CONFIANÇA
-       ========================================================================== -->
+    <!-- BARRA DE CONFIANÇA -->
     <div class="trust-bar">
         <div class="container trust-grid">
             <div class="trust-item">
@@ -1317,9 +1234,7 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-       ESTATÍSTICAS DA LOJA
-       ========================================================================== -->
+    <!-- ESTATÍSTICAS -->
     <section class="stats-section">
         <div class="container stats-grid">
             <div class="stat-card">
@@ -1341,15 +1256,12 @@
         </div>
     </section>
 
-    <!-- ==========================================================================
-       CATÁLOGO E PESQUISA DE PRODUTOS
-       ========================================================================== -->
+    <!-- CATÁLOGO -->
     <section class="catalog-section" id="catalog">
         <div class="container">
             <h2 class="section-title">ESCOLHA SEU PRODUTO</h2>
             <p class="section-subtitle">Explore nosso catálogo completo para Blox Fruits, Grow a Garden 2 e Robux</p>
 
-            <!-- BARRA DE PESQUISA E FILTROS -->
             <div class="search-filter-bar">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -1371,7 +1283,6 @@
                 </div>
             </div>
 
-            <!-- CATEGORIAS -->
             <div class="category-nav">
                 <button class="cat-btn active" onclick="setCategoryFilter('all', this)"><i class="fa-solid fa-border-all"></i> Todos</button>
                 <button class="cat-btn" onclick="setCategoryFilter('blox-fruits', this)"><i class="fa-solid fa-apple-whole"></i> Blox Fruits</button>
@@ -1379,29 +1290,20 @@
                 <button class="cat-btn" onclick="setCategoryFilter('robux', this)"><i class="fa-solid fa-coins"></i> Robux</button>
             </div>
 
-            <!-- GRID DE PRODUTOS CONTAINER -->
-            <div class="products-grid" id="products-grid">
-                <!-- Injetado dinamicamente via JS -->
-            </div>
+            <div class="products-grid" id="products-grid"></div>
         </div>
     </section>
 
-    <!-- ==========================================================================
-       SEÇÃO DE OFERTAS ESPECIAIS
-       ========================================================================== -->
+    <!-- OFERTAS -->
     <section class="offers-section">
         <div class="container">
             <h2 class="section-title" style="color: #ff3366;"><i class="fa-solid fa-fire"></i> OFERTAS IMPERDÍVEIS</h2>
             <p class="section-subtitle">Aproveite os descontos por tempo limitado na THULERX STORE</p>
-            <div class="products-grid" id="offers-grid">
-                <!-- Injetado dinamicamente via JS -->
-            </div>
+            <div class="products-grid" id="offers-grid"></div>
         </div>
     </section>
 
-    <!-- ==========================================================================
-       COMO FUNCIONA
-       ========================================================================== -->
+    <!-- COMO FUNCIONA -->
     <section class="how-it-works" id="how-it-works">
         <div class="container">
             <h2 class="section-title">COMO FUNCIONA?</h2>
@@ -1442,23 +1344,16 @@
         </div>
     </section>
 
-    <!-- ==========================================================================
-       AVALIAÇÕES DE CLIENTES
-       ========================================================================== -->
+    <!-- AVALIAÇÕES -->
     <section class="reviews-section" id="reviews" style="padding: 60px 0;">
         <div class="container">
             <h2 class="section-title">AVALIAÇÕES DOS CLIENTES</h2>
             <p class="section-subtitle">Veja o que dizem aqueles que já compraram na THULERX STORE</p>
-
-            <div class="products-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));" id="reviews-container">
-                <!-- Avaliações injetadas por JS -->
-            </div>
+            <div class="products-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));" id="reviews-container"></div>
         </div>
     </section>
 
-    <!-- ==========================================================================
-       PERFIL DO USUÁRIO & HISTÓRICO DE PEDIDOS
-       ========================================================================== -->
+    <!-- PERFIL -->
     <section class="profile-section" id="profile">
         <div class="container">
             <div class="profile-card">
@@ -1513,21 +1408,27 @@
         </div>
     </section>
 
-    <!-- ==========================================================================
-       PAINEL ADMINISTRATIVO (VISUAL)
-       ========================================================================== -->
+    <!-- PAINEL ADMINISTRATIVO COM SENHA -->
     <section class="admin-section">
         <div class="container">
-            <h2 class="section-title">PAINEL ADMINISTRATIVO (PREVIEW)</h2>
-            <p class="section-subtitle">Interface visual de gerenciamento da THULERX STORE</p>
+            <h2 class="section-title">PAINEL ADMINISTRATIVO</h2>
+            <p class="section-subtitle">Área restrita de gerenciamento da THULERX STORE</p>
 
-            <div class="admin-grid">
+            <div class="admin-lock-screen" id="admin-lock-screen">
+                <i class="fa-solid fa-lock" style="font-size:3rem; color:var(--accent-blue); margin-bottom:15px;"></i>
+                <h3 style="margin-bottom:10px;">Painel Protegido</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Digite a senha de administrador para acessar os dados da loja.</p>
+                <button class="btn" onclick="openAdminPasswordModal()"><i class="fa-solid fa-key"></i> ACESSAR PAINEL ADMIN</button>
+            </div>
+
+            <div class="admin-grid" id="admin-dashboard-grid">
                 <div class="admin-sidebar">
                     <button class="admin-menu-btn active"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
                     <button class="admin-menu-btn"><i class="fa-solid fa-box"></i> Produtos</button>
                     <button class="admin-menu-btn"><i class="fa-solid fa-warehouse"></i> Estoque</button>
                     <button class="admin-menu-btn"><i class="fa-solid fa-receipt"></i> Pedidos</button>
                     <button class="admin-menu-btn"><i class="fa-solid fa-users"></i> Clientes</button>
+                    <button class="admin-menu-btn" onclick="lockAdminPanel()" style="color:#ff3366;"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
                 </div>
                 <div class="admin-content">
                     <h3 style="margin-bottom:15px;">Resumo Geral</h3>
@@ -1550,10 +1451,8 @@
         </div>
     </section>
 
-    <!-- ==========================================================================
-       PERGUNTAS FREQUENTES (FAQ) & SUPORTE
-       ========================================================================== -->
-    <section class="faq-section">
+    <!-- FAQ & SUPORTE -->
+    <section class="faq-section" id="faq">
         <div class="container">
             <h2 class="section-title">PERGUNTAS FREQUENTES</h2>
             <p class="section-subtitle">Tire suas dúvidas rápidas sobre nossos serviços</p>
@@ -1590,29 +1489,24 @@
         </div>
     </section>
 
-    <!-- SUPORTE -->
     <section class="support-section" id="support" style="text-align: center; padding: 60px 0;">
         <div class="container">
             <h2 class="section-title">PRECISA DE AJUDA?</h2>
             <p class="section-subtitle">Nosso suporte está pronto para atender você a qualquer momento.</p>
             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
-                <a href="#" class="btn"><i class="fa-solid fa-headset"></i> FALAR COM SUPORTE</a>
-                <a href="#" class="btn btn-outline" style="border-color:#5865F2; color:#fff;"><i class="fa-brands fa-discord" style="color:#5865F2;"></i> ENTRAR NO DISCORD</a>
+                <button class="btn" onclick="openSupportModal()"><i class="fa-solid fa-headset"></i> FALAR COM SUPORTE</button>
+                <a href="https://discord.gg" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:#5865F2; color:#fff;"><i class="fa-brands fa-discord" style="color:#5865F2;"></i> ENTRAR NO DISCORD</a>
             </div>
         </div>
     </section>
 
-    <!-- ==========================================================================
-       DRAWER DO CARRINHO DE COMPRAS
-       ========================================================================== -->
+    <!-- DRAWER DO CARRINHO -->
     <div class="cart-drawer" id="cart-drawer">
         <div class="cart-header">
             <h3>SEU CARRINHO</h3>
             <button class="close-cart" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div class="cart-items" id="cart-items-container">
-            <!-- Itens do Carrinho Injetados por JS -->
-        </div>
+        <div class="cart-items" id="cart-items-container"></div>
         <div class="cart-footer">
             <div class="cart-total-row">
                 <span>TOTAL:</span>
@@ -1622,9 +1516,8 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-       MODAL DE CHECKOUT
-       ========================================================================== -->
+    <!-- MODAIS -->
+    <!-- Checkout -->
     <div class="modal" id="checkout-modal">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h3 style="font-family:var(--font-heading); font-size:2rem;">CHECKOUT</h3>
@@ -1641,9 +1534,7 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-       MODAL DE LOGIN / GOOGLE
-       ========================================================================== -->
+    <!-- Auth -->
     <div class="modal" id="auth-modal">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <h3 style="font-family:var(--font-heading); font-size:2rem;">ACESSAR CONTA</h3>
@@ -1655,14 +1546,34 @@
         </button>
     </div>
 
-    <!-- ==========================================================================
-       FOOTER
-       ========================================================================== -->
+    <!-- Admin Password Modal -->
+    <div class="modal" id="admin-modal">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h3 style="font-family:var(--font-heading); font-size:2rem;">SENHA DE ADMINISTRADOR</h3>
+            <button class="close-cart" onclick="closeAllModals()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">Digite a chave para autorizar o acesso ao painel:</p>
+        <input type="password" id="admin-password-input" placeholder="Sua senha..." style="width:100%; padding:12px; background:rgba(7,9,19,0.8); border:1px solid var(--border-light); border-radius:8px; color:#fff; margin-bottom:15px; outline:none;">
+        <button class="btn" style="width:100%;" onclick="verifyAdminPassword()">ENTRAR NO PAINEL</button>
+    </div>
+
+    <!-- Suporte Modal -->
+    <div class="modal" id="support-modal">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h3 style="font-family:var(--font-heading); font-size:2rem;">CENTRAL DE SUPORTE</h3>
+            <button class="close-cart" onclick="closeAllModals()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">Envie uma mensagem direta para a nossa equipe de atendimento:</p>
+        <textarea id="support-msg" rows="4" placeholder="Descreva sua dúvida ou problema..." style="width:100%; padding:12px; background:rgba(7,9,19,0.8); border:1px solid var(--border-light); border-radius:8px; color:#fff; margin-bottom:15px; outline:none; resize:none;"></textarea>
+        <button class="btn" style="width:100%;" onclick="sendSupportTicket()">ENVIAR MENSAGEM</button>
+    </div>
+
+    <!-- FOOTER -->
     <footer>
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="#" class="logo">
+                    <a href="#home" class="logo">
                         <i class="fa-solid fa-gamepad" style="color: var(--accent-blue);"></i>
                         THULERX<span>STORE</span>
                     </a>
@@ -1690,7 +1601,7 @@
                     <h4>Suporte</h4>
                     <ul>
                         <li><a href="#support">Central de Ajuda</a></li>
-                        <li><a href="#support">Discord Oficial</a></li>
+                        <li><a href="https://discord.gg" target="_blank">Discord Oficial</a></li>
                         <li><a href="#faq">Perguntas Frequentes</a></li>
                     </ul>
                 </div>
@@ -1701,13 +1612,9 @@
         </div>
     </footer>
 
-    <!-- ==========================================================================
-       SCRIPTS DA THULERX STORE
-       ========================================================================== -->
     <script>
-        /* ==========================================================================
-           1. BASE DE DADOS DOS PRODUTOS & AVALIAÇÕES
-           ========================================================================== */
+        const ADMIN_PASSWORD = "admin123";
+
         const productsData = [
             { id: 1, name: 'Permanent Buddha', category: 'blox-fruits', price: 49.90, oldPrice: 59.90, stock: 12, inStock: true, badge: 'hot', icon: 'fa-apple-whole', isOffer: true },
             { id: 2, name: 'Permanent Kitsune', category: 'blox-fruits', price: 120.00, oldPrice: 140.00, stock: 3, inStock: true, badge: 'low', icon: 'fa-fire-flame-curved', isOffer: true },
@@ -1729,9 +1636,6 @@
         let favorites = [];
         let activeCategoryFilter = 'all';
 
-        /* ==========================================================================
-           2. TELA DE CARREGAMENTO & CURSOR
-           ========================================================================== */
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             setTimeout(() => {
@@ -1745,7 +1649,6 @@
             animateStats();
         });
 
-        // Cursor do mouse
         const cursor = document.querySelector('.custom-cursor');
         const follower = document.querySelector('.custom-cursor-follower');
         if (cursor && follower) {
@@ -1757,9 +1660,6 @@
             });
         }
 
-        /* ==========================================================================
-           3. RENDERIZAÇÃO DE PRODUTOS
-           ========================================================================== */
         function renderProducts() {
             const grid = document.getElementById('products-grid');
             grid.innerHTML = '';
@@ -1850,9 +1750,6 @@
             renderProducts();
         }
 
-        /* ==========================================================================
-           4. LÓGICA DO CARRINHO DE COMPRAS
-           ========================================================================== */
         function addToCart(productId) {
             const product = productsData.find(p => p.id === productId);
             if (!product) return;
@@ -1925,9 +1822,6 @@
             document.getElementById('overlay').classList.toggle('active');
         }
 
-        /* ==========================================================================
-           5. FAVORITOS & NOTIFICAÇÕES
-           ========================================================================== */
         function toggleFav(id, btn) {
             if (favorites.includes(id)) {
                 favorites = favorites.filter(favId => favId !== id);
@@ -1959,9 +1853,6 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
-        /* ==========================================================================
-           6. MODAIS (CHECKOUT, AUTH, ETC.)
-           ========================================================================== */
         function openCheckoutModal() {
             if (cart.length === 0) {
                 showToast('Seu carrinho está vazio!');
@@ -1977,9 +1868,51 @@
             document.getElementById('overlay').classList.add('active');
         }
 
+        function openSupportModal() {
+            document.getElementById('support-modal').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function openAdminPasswordModal() {
+            document.getElementById('admin-modal').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function verifyAdminPassword() {
+            const pwd = document.getElementById('admin-password-input').value;
+            if (pwd === ADMIN_PASSWORD) {
+                showToast('✅ Acesso autorizado!');
+                closeAllModals();
+                document.getElementById('admin-lock-screen').style.display = 'none';
+                document.getElementById('admin-dashboard-grid').classList.add('unlocked');
+                document.getElementById('admin-password-input').value = '';
+            } else {
+                showToast('❌ Senha incorreta!');
+            }
+        }
+
+        function lockAdminPanel() {
+            document.getElementById('admin-lock-screen').style.display = 'block';
+            document.getElementById('admin-dashboard-grid').classList.remove('unlocked');
+            showToast('🔒 Painel bloqueado.');
+        }
+
+        function sendSupportTicket() {
+            const text = document.getElementById('support-msg').value;
+            if(!text.trim()) {
+                showToast('Digite uma mensagem antes de enviar!');
+                return;
+            }
+            showToast('📩 Mensagem enviada para o suporte!');
+            document.getElementById('support-msg').value = '';
+            closeAllModals();
+        }
+
         function closeAllModals() {
             document.getElementById('checkout-modal').classList.remove('active');
             document.getElementById('auth-modal').classList.remove('active');
+            document.getElementById('admin-modal').classList.remove('active');
+            document.getElementById('support-modal').classList.remove('active');
             document.getElementById('cart-drawer').classList.remove('active');
             document.getElementById('overlay').classList.remove('active');
         }
@@ -1999,9 +1932,6 @@
             closeAllModals();
         }
 
-        /* ==========================================================================
-           7. ANIMAÇÕES DE ESTATÍSTICAS & COMPONENTES VISUAIS
-           ========================================================================== */
         function animateStats() {
             const statNumbers = document.querySelectorAll('.stat-number');
             statNumbers.forEach(stat => {
@@ -2050,7 +1980,10 @@
             document.getElementById('nav-links').classList.toggle('active');
         }
 
-        // Alteração do background da navbar no Scroll
+        function closeMobileMenu() {
+            document.getElementById('nav-links').classList.remove('active');
+        }
+
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -2060,9 +1993,6 @@
             }
         });
 
-        /* ==========================================================================
-           8. CANVAS DE PARTÍCULAS SUTIS NO FUNDO
-           ========================================================================== */
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
 
