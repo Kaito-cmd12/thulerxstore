@@ -1,1424 +1,378 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THULERX STORE — Os Melhores Itens Roblox em Um Só Lugar</title>
-    <!-- Google Fonts & FontAwesome Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Teko:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Administrativo Minimalista</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React e ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  
+  <!-- Babel para interpretar o JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Firebase SDKs (v10.8.0) -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-
-    <style>
-        /* ==========================================================================
-           1. CONFIGURAÇÕES GERAIS E VARIÁVEIS DE DESIGN
-           ========================================================================== */
-        :root {
-            --bg-dark: #070913;
-            --bg-card: rgba(13, 18, 38, 0.65);
-            --bg-card-hover: rgba(22, 30, 61, 0.85);
-            --accent-blue: #00f0ff;
-            --accent-blue-deep: #0066ff;
-            --accent-purple: #7000ff;
-            --text-main: #f0f4f8;
-            --text-muted: #8a99ad;
-            --border-glow: rgba(0, 240, 255, 0.25);
-            --border-light: rgba(255, 255, 255, 0.08);
-            --font-main: 'Plus Jakarta Sans', sans-serif;
-            --font-heading: 'Teko', sans-serif;
-            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: var(--font-main);
-            color: var(--text-main);
-            user-select: none;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        #bg-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        .ambient-glow {
-            position: fixed;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(0, 102, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            top: -200px; left: 50%;
-            transform: translateX(-50%);
-            z-index: -1;
-            pointer-events: none;
-            filter: blur(80px);
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: #161e3d; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue-deep); }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* SISTEMA DE NAVEGAÇÃO SPA (TELAS EXCLUSIVAS) */
-        .page-view {
-            display: none;
-            opacity: 0;
-            transition: opacity var(--transition-smooth);
-            padding-top: 120px;
-            min-height: calc(100vh - 300px);
-        }
-
-        .page-view.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--accent-blue-deep), var(--accent-blue));
-            color: #fff;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: var(--transition-fast);
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
-            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.4);
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 6px 30px rgba(0, 240, 255, 0.6);
-        }
-
-        .btn:disabled {
-            background: #2a3447;
-            color: #6c7a89;
-            box-shadow: none;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-outline {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-glow);
-            box-shadow: none;
-        }
-
-        .btn-outline:hover {
-            background: rgba(0, 240, 255, 0.1);
-            border-color: var(--accent-blue);
-        }
-
-        .badge {
-            font-size: 0.75rem;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .badge-hot { background: #ff3366; color: #fff; box-shadow: 0 0 10px rgba(255,51,102,0.5); }
-        .badge-low { background: #ff9900; color: #fff; }
-        .badge-new { background: #00e676; color: #000; }
-
-        .section-title {
-            font-family: var(--font-heading);
-            font-size: 3rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 10px;
-            background: linear-gradient(180deg, #fff 0%, var(--text-muted) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            font-size: 1rem;
-        }
-
-        /* ==========================================================================
-           2. TELA DE CARREGAMENTO (LOADING)
-           ========================================================================== */
-        #preloader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-dark);
-            z-index: 100000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-
-        .loader-logo {
-            font-family: var(--font-heading);
-            font-size: 3.5rem;
-            letter-spacing: 4px;
-            color: #fff;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px var(--accent-blue);
-        }
-
-        .loader-bar {
-            width: 200px; height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .loader-progress {
-            width: 0%; height: 100%;
-            background: linear-gradient(90deg, var(--accent-blue-deep), var(--accent-blue));
-            box-shadow: 0 0 10px var(--accent-blue);
-            animation: load 1.2s ease-in-out forwards;
-        }
-
-        @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
-
-        /* ==========================================================================
-           3. NAVBAR E NOTIFICAÇÕES
-           ========================================================================== */
-        .navbar {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            z-index: 1000;
-            padding: 20px 0;
-            background: rgba(7, 9, 19, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: var(--font-heading);
-            font-size: 2.2rem;
-            letter-spacing: 2px;
-            text-decoration: none;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo span { color: var(--accent-blue); }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            transition: var(--transition-fast);
-            cursor: pointer;
-            position: relative;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: #fff;
-            text-shadow: 0 0 10px var(--accent-blue);
-        }
-
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px; left: 0; width: 100%; height: 2px;
-            background: var(--accent-blue);
-            box-shadow: 0 0 8px var(--accent-blue);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .icon-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-light);
-            width: 42px; height: 42px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transition: var(--transition-fast);
-            cursor: pointer;
-        }
-
-        .icon-btn:hover {
-            background: rgba(0, 240, 255, 0.15);
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        .cart-badge-count {
-            position: absolute;
-            top: -6px; right: -6px;
-            background: var(--accent-blue);
-            color: #000;
-            font-size: 0.7rem;
-            font-weight: 800;
-            width: 18px; height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center; justify-content: center;
-        }
-
-        .cart-pop-anim {
-            animation: popCart 0.3s ease;
-        }
-        @keyframes popCart { 0% { transform: scale(1); } 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
-
-        .user-nav-avatar {
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--accent-blue);
-        }
-
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            background: none; border: none;
-            color: #fff; cursor: pointer;
-        }
-
-        /* Toast Popup de Alerta */
-        #toast-container {
-            position: fixed;
-            bottom: 20px; right: 20px;
-            z-index: 10000;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-
-        .toast {
-            background: rgba(13, 18, 38, 0.95);
-            border-left: 4px solid var(--accent-blue);
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-            display: flex; align-items: center; gap: 12px;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-
-        /* ==========================================================================
-           4. HERO & HOME SECTION
-           ========================================================================== */
-        .hero { padding: 40px 0 60px; }
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 50px;
-            align-items: center;
-        }
-        .hero-title-tag {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(0, 240, 255, 0.1);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            color: var(--accent-blue);
-            font-size: 0.85rem; font-weight: 700;
-            text-transform: uppercase; margin-bottom: 20px;
-        }
-        .hero-h1 {
-            font-family: var(--font-heading);
-            font-size: 4.8rem; line-height: 0.95;
-            text-transform: uppercase; margin-bottom: 20px;
-            background: linear-gradient(180deg, #ffffff 30%, var(--accent-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 35px; }
-
-        .trust-bar { padding: 30px 0; background: rgba(13, 18, 38, 0.4); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); margin: 40px 0; }
-        .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-        .trust-item { display: flex; align-items: center; gap: 15px; padding: 15px 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-light); border-radius: 12px; }
-        .trust-item i { font-size: 1.8rem; color: var(--accent-blue); }
-
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; text-align: center; }
-        .stat-card { padding: 30px; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; }
-        .stat-number { font-family: var(--font-heading); font-size: 3.5rem; color: var(--accent-blue); }
-
-        /* ==========================================================================
-           5. CATÁLOGO E FILTROS DE PRODUTOS
-           ========================================================================== */
-        .category-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
-        .cat-btn {
-            padding: 12px 20px; border-radius: 12px;
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light);
-            font-weight: 700; cursor: pointer; transition: var(--transition-fast);
-            display: flex; align-items: center; gap: 8px;
-        }
-        .cat-btn.active, .cat-btn:hover { background: rgba(0, 240, 255, 0.15); border-color: var(--accent-blue); color: var(--accent-blue); }
-
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
-        .product-card {
-            background: var(--bg-card); border: 1px solid var(--border-light);
-            border-radius: 18px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
-            transition: var(--transition-fast);
-        }
-        .product-card:hover { transform: translateY(-5px); border-color: var(--border-glow); background: var(--bg-card-hover); }
-
-        .product-img-wrapper { height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
-        .product-img-wrapper img { max-height: 140px; max-width: 100%; object-fit: contain; }
-        .product-img-wrapper i { font-size: 4.5rem; color: var(--accent-blue); }
-
-        .coming-soon-card {
-            background: rgba(13, 18, 38, 0.4); border: 2px dashed var(--border-glow);
-            border-radius: 20px; padding: 60px 20px; text-align: center;
-        }
-
-        /* ==========================================================================
-           6. CARRINHO DE COMPRAS DRAWER
-           ========================================================================== */
-        .cart-drawer {
-            position: fixed; top: 0; right: -420px;
-            width: 100%; max-width: 400px; height: 100%;
-            background: #0a0e1a; border-left: 1px solid var(--border-glow);
-            z-index: 10000; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex; flex-direction: column; padding: 25px;
-        }
-        .cart-drawer.active { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid var(--border-light); }
-        .cart-items { flex: 1; overflow-y: auto; padding: 20px 0; display: flex; flex-direction: column; gap: 15px; }
-        .cart-item { display: flex; gap: 15px; align-items: center; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 10px; border: 1px solid var(--border-light); }
-        .cart-item-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
-        .cart-item-qty { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
-        .cart-item-qty button { width: 24px; height: 24px; background: rgba(255,255,255,0.1); border: none; border-radius: 4px; color: #fff; cursor: pointer; }
-
-        .empty-cart-state { text-align: center; padding: 40px 10px; }
-        .empty-cart-state i { font-size: 3rem; color: var(--text-muted); margin-bottom: 15px; }
-
-        /* ==========================================================================
-           7. PAINEL ADMIN & CHAT & CALL
-           ========================================================================== */
-        .admin-grid { display: grid; grid-template-columns: 220px 1fr; gap: 30px; background: var(--bg-card); border-radius: 20px; padding: 25px; border: 1px solid var(--border-glow); }
-        .admin-sidebar { display: flex; flex-direction: column; gap: 10px; border-right: 1px solid var(--border-light); padding-right: 20px; }
-        .admin-menu-btn { padding: 12px; background: none; border: none; text-align: left; font-weight: 600; color: var(--text-muted); border-radius: 8px; cursor: pointer; }
-        .admin-menu-btn.active { background: rgba(0,240,255,0.1); color: var(--accent-blue); }
-
-        .chat-box { background: rgba(7, 9, 19, 0.8); border: 1px solid var(--border-light); border-radius: 12px; height: 320px; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .chat-msg { background: rgba(255, 255, 255, 0.05); padding: 10px 14px; border-radius: 10px; max-width: 80%; }
-        .chat-msg.self { align-self: flex-end; background: rgba(0, 240, 255, 0.15); border: 1px solid var(--border-glow); }
-
-        .team-status-list { background: rgba(7, 9, 19, 0.6); border: 1px solid var(--border-light); border-radius: 12px; padding: 15px; margin-bottom: 20px; }
-        .online-dot { width: 10px; height: 10px; border-radius: 50%; background: #00e676; display: inline-block; box-shadow: 0 0 8px #00e676; }
-
-        .call-container { background: rgba(7, 9, 19, 0.8); border: 1px solid var(--border-glow); border-radius: 12px; padding: 20px; text-align: center; }
-        .call-members-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
-        .call-member-card { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .call-avatar-frame { width: 64px; height: 64px; border-radius: 50%; background: #161e3d; border: 2px solid var(--accent-blue); display: flex; align-items: center; justify-content: center; position: relative; }
-        .call-avatar-frame.speaking { border-color: #00e676; box-shadow: 0 0 15px #00e676; }
-
-        /* Modais e Overlays */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .overlay.active { opacity: 1; pointer-events: all; }
-        .modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 550px; background: #0d1226; border: 1px solid var(--border-glow); border-radius: 20px; padding: 30px; z-index: 10001; opacity: 0; pointer-events: none; transition: var(--transition-fast); }
-        .modal.active { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: all; }
-
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-size: 0.85rem; color: var(--text-muted); }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; background: rgba(7, 9, 19, 0.8); border: 1px solid var(--border-light); border-radius: 8px; color: #fff; outline: none; }
-
-        footer { background: #04060d; border-top: 1px solid var(--border-light); padding: 60px 0 30px; margin-top: 80px; }
-        .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 40px; margin-bottom: 40px; }
-
-        @media (max-width: 992px) {
-            .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .admin-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 768px) {
-            .nav-links { position: fixed; top: 70px; right: -100%; width: 100%; height: calc(100vh - 70px); background: #070913; flex-direction: column; align-items: center; padding: 40px; transition: 0.3s ease; }
-            .nav-links.active { right: 0; }
-            .menu-toggle { display: block; }
-        }
-    </style>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 font-sans">
 
-    <canvas id="bg-canvas"></canvas>
-    <div class="ambient-glow"></div>
+  <!-- Ponto de montagem do React -->
+  <div id="root"></div>
 
-    <!-- PRELOADER -->
-    <div id="preloader">
-        <div class="loader-logo">THULERX<span>STORE</span></div>
-        <div class="loader-bar"><div class="loader-progress"></div></div>
-    </div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
-    <div id="toast-container"></div>
-    <div class="overlay" id="overlay" onclick="closeAllModals()"></div>
+    function AdminDashboard() {
+      const [activeTab, setActiveTab] = useState('produtos');
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a onclick="navigateTo('home')" class="logo" style="cursor: pointer;">
-                <i class="fa-solid fa-gamepad" style="color: var(--accent-blue);"></i>
-                THULERX<span>STORE</span>
-            </a>
+      // Lista de Categorias
+      const [categories, setCategories] = useState([
+        { id: 1, name: 'Eletrônicos', description: 'Gadgets e periféricos' },
+        { id: 2, name: 'Acessórios', description: 'Capas, cabos e suportes' }
+      ]);
 
-            <ul class="nav-links" id="nav-links">
-                <li><a id="nav-home" class="active" onclick="navigateTo('home')">Início</a></li>
-                <li><a id="nav-catalog" onclick="navigateTo('catalog')">Produtos</a></li>
-                <li><a id="nav-reviews" onclick="navigateTo('reviews')">Avaliações</a></li>
-                <li><a id="nav-how-it-works" onclick="navigateTo('how-it-works')">Como Funciona</a></li>
-                <li><a id="nav-support" onclick="navigateTo('support')">Suporte</a></li>
-                <li id="team-nav-link" style="display:none;"><a id="nav-team" onclick="navigateTo('team')" style="color: var(--accent-blue);"><i class="fa-solid fa-users-gear"></i> Equipe</a></li>
-                <li id="admin-nav-link" style="display:none;"><a id="nav-admin" onclick="navigateTo('admin')" style="color: #ff3366;"><i class="fa-solid fa-user-shield"></i> Admin</a></li>
-            </ul>
+      // Lista de Produtos
+      const [products, setProducts] = useState([
+        { id: 1, name: 'Fone Bluetooth Minimal', category: 'Eletrônicos', price: 'R$ 299,00' },
+        { id: 2, name: 'Suporte de Alumínio', category: 'Acessórios', price: 'R$ 89,00' }
+      ]);
 
-            <div class="nav-actions">
-                <button class="icon-btn" onclick="toggleCart()" title="Carrinho" id="cart-icon-btn">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="cart-badge-count" id="cart-count">0</span>
+      // Campos do Formulário de Categoria
+      const [catName, setCatName] = useState('');
+      const [catDesc, setCatDesc] = useState('');
+      const [editingCatId, setEditingCatId] = useState(null);
+
+      // Campos do Formulário de Produto
+      const [prodName, setProdName] = useState('');
+      const [prodCategory, setProdCategory] = useState('');
+      const [prodPrice, setProdPrice] = useState('');
+      const [editingProdId, setEditingProdId] = useState(null);
+
+      // Atualiza os ícones na tela sempre que a aba muda
+      useEffect(() => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      }, [activeTab, categories, products]);
+
+      // --- AÇÕES DE CATEGORIAS ---
+      const handleSaveCategory = () => {
+        if (!catName) return;
+
+        if (editingCatId) {
+          setCategories(categories.map(c => c.id === editingCatId ? { ...c, name: catName, description: catDesc } : c));
+          setEditingCatId(null);
+        } else {
+          setCategories([...categories, { id: Date.now(), name: catName, description: catDesc || 'Sem descrição' }]);
+        }
+
+        setCatName('');
+        setCatDesc('');
+      };
+
+      const handleEditCategory = (category) => {
+        setEditingCatId(category.id);
+        setCatName(category.name);
+        setCatDesc(category.description);
+      };
+
+      const handleDeleteCategory = (id) => {
+        setCategories(categories.filter(c => c.id !== id));
+      };
+
+      // --- AÇÕES DE PRODUTOS ---
+      const handleSaveProduct = () => {
+        if (!prodName || !prodPrice) return;
+
+        if (editingProdId) {
+          setProducts(products.map(p => p.id === editingProdId ? { ...p, name: prodName, category: prodCategory || 'Geral', price: prodPrice } : p));
+          setEditingProdId(null);
+        } else {
+          setProducts([...products, { id: Date.now(), name: prodName, category: prodCategory || 'Geral', price: prodPrice }]);
+        }
+
+        setProdName('');
+        setProdCategory('');
+        setProdPrice('');
+      };
+
+      const handleEditProduct = (product) => {
+        setEditingProdId(product.id);
+        setProdName(product.name);
+        setProdCategory(product.category);
+        setProdPrice(product.price);
+      };
+
+      const handleDeleteProduct = (id) => {
+        setProducts(products.filter(p => p.id !== id));
+      };
+
+      return (
+        <div className="flex h-screen overflow-hidden">
+          
+          <!-- Menu Lateral -->
+          <aside className="w-64 bg-white border-r border-gray-100 p-6 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-10">
+                <div className="w-9 h-9 rounded-xl bg-[#0084FF] flex items-center justify-center text-white font-bold text-lg shadow-sm">
+                  A
+                </div>
+                <div>
+                  <h2 className="font-bold text-base text-gray-900 leading-none">AdminPanel</h2>
+                  <span className="text-[10px] text-gray-400 font-medium">Equipe de Gestão</span>
+                </div>
+              </div>
+
+              <nav className="space-y-1">
+                <button 
+                  onClick={() => setActiveTab('produtos')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                    activeTab === 'produtos' 
+                      ? 'bg-[#0084FF]/10 text-[#0084FF]' 
+                      : 'text-gray-500 hover:bg-gray-50'
+                  }`}
+                >
+                  <i data-lucide="package" class="w-4 h-4"></i> Produtos
                 </button>
 
-                <a onclick="navigateTo('profile')" class="icon-btn" title="Perfil" style="cursor:pointer;" id="user-profile-btn">
-                    <i class="fa-regular fa-user" id="user-nav-icon"></i>
-                </a>
-
-                <button class="btn btn-outline" id="auth-btn" style="padding: 8px 16px; font-size: 0.8rem;" onclick="handleAuthAction()">Entrar com Google</button>
-
-                <button class="menu-toggle" onclick="toggleMobileMenu()">
-                    <i class="fa-solid fa-bars"></i>
+                <button 
+                  onClick={() => setActiveTab('categorias')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                    activeTab === 'categorias' 
+                      ? 'bg-[#0084FF]/10 text-[#0084FF]' 
+                      : 'text-gray-500 hover:bg-gray-50'
+                  }`}
+                >
+                  <i data-lucide="folder" class="w-4 h-4"></i> Categorias
                 </button>
+
+                <button 
+                  onClick={() => setActiveTab('calls')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                    activeTab === 'calls' 
+                      ? 'bg-[#0084FF]/10 text-[#0084FF]' 
+                      : 'text-gray-500 hover:bg-gray-50'
+                  }`}
+                >
+                  <i data-lucide="video" class="w-4 h-4"></i> Sala de Reunião
+                </button>
+              </nav>
             </div>
-        </div>
-    </nav>
 
-    <!-- ==========================================================================
-       PÁGINAS SPA (SINGLE PAGE APPLICATION)
-       ========================================================================== -->
-
-    <!-- 1. PÁGINA INÍCIO -->
-    <main id="page-home" class="page-view active">
-        <section class="hero">
-            <div class="container hero-grid">
-                <div class="hero-content">
-                    <span class="hero-title-tag"><i class="fa-solid fa-bolt"></i> Loja Oficial THULERX STORE</span>
-                    <h1 class="hero-h1">OS MELHORES ITENS ROBLOX EM UM SÓ LUGAR</h1>
-                    <p class="hero-p">Robux, Blox Fruits e Frutas Físicas com preços imbatíveis e entrega garantida.</p>
-                    <div style="display:flex; gap:15px; flex-wrap:wrap;">
-                        <button class="btn" onclick="navigateTo('catalog')"><i class="fa-solid fa-bag-shopping"></i> VER CATÁLOGO</button>
-                        <button class="btn btn-outline" onclick="navigateTo('how-it-works')"><i class="fa-solid fa-circle-info"></i> COMO FUNCIONA</button>
-                    </div>
+            <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#0084FF]/20 text-[#0084FF] font-bold flex items-center justify-center text-xs">
+                  EQ
                 </div>
-                <div style="display:flex; justify-content:center;">
-                    <div style="width:100%; max-width:360px; padding:30px; background:var(--bg-card); border:1px solid var(--border-glow); border-radius:24px; text-align:center;">
-                        <i class="fa-solid fa-shield-halved" style="font-size:5rem; color:var(--accent-blue); margin-bottom:15px;"></i>
-                        <h3 style="font-family:var(--font-heading); font-size:2rem;">THULERX GUARANTEE</h3>
-                        <p style="color:var(--text-muted); font-size:0.85rem;">Sistema de entrega verificado e ativadores automáticos de suporte em tempo real.</p>
-                    </div>
+                <div>
+                  <p className="text-xs font-semibold text-gray-700">Minha Equipe</p>
+                  <p className="text-[10px] text-gray-400">admin@empresa.com</p>
                 </div>
+              </div>
             </div>
-        </section>
+          </aside>
 
-        <div class="trust-bar">
-            <div class="container trust-grid">
-                <div class="trust-item"><i class="fa-solid fa-bolt"></i><div><h4>ENTREGA RÁPIDA</h4><p>Envio imediato via sistema</p></div></div>
-                <div class="trust-item"><i class="fa-solid fa-shield-cat"></i><div><h4>COMPRA SEGURA</h4><p>Garantia total de recebimento</p></div></div>
-                <div class="trust-item"><i class="fa-solid fa-pix"></i><div><h4>PAGAMENTO VIA PIX</h4><p>Aprovação instantânea</p></div></div>
-                <div class="trust-item"><i class="fa-solid fa-headset"></i><div><h4>SUPORTE EM TEMPO REAL</h4><p>Equipe pronta para atender</p></div></div>
-            </div>
-        </div>
-
-        <section class="container" style="padding: 40px 0;">
-            <h2 class="section-title">OFERTAS EM DESTAQUE</h2>
-            <p class="section-subtitle">Confira nossas ofertas imperdíveis da semana</p>
-            <div class="products-grid" id="home-offers-grid"></div>
-        </section>
-    </main>
-
-    <!-- 2. PÁGINA PRODUTOS -->
-    <main id="page-catalog" class="page-view">
-        <div class="container">
-            <h2 class="section-title">CATÁLOGO EXCLUSIVO</h2>
-            <p class="section-subtitle">Selecione uma categoria para visualizar nossos produtos</p>
-
-            <div class="category-nav">
-                <button class="cat-btn active" onclick="switchCategory('all', this)"><i class="fa-solid fa-border-all"></i> Todos</button>
-                <button class="cat-btn" onclick="switchCategory('blox-fruits', this)"><i class="fa-solid fa-apple-whole"></i> Blox Fruits</button>
-                <button class="cat-btn" onclick="switchCategory('frutas-fisicas', this)"><i class="fa-solid fa-box-open"></i> Frutas Físicas</button>
-                <button class="cat-btn" onclick="switchCategory('frutas-permanentes', this)"><i class="fa-solid fa-lock"></i> Frutas Permanentes</button>
-                <button class="cat-btn" onclick="switchCategory('robux', this)"><i class="fa-solid fa-coins"></i> Robux</button>
-                <button class="cat-btn" onclick="switchCategory('ofertas', this)"><i class="fa-solid fa-fire"></i> Ofertas</button>
-            </div>
-
-            <div id="catalog-content-area"></div>
-        </div>
-    </main>
-
-    <!-- 3. PÁGINA AVALIAÇÕES -->
-    <main id="page-reviews" class="page-view">
-        <div class="container">
-            <h2 class="section-title">AVALIAÇÕES DOS CLIENTES</h2>
-            <p class="section-subtitle">Média Geral: <strong style="color:var(--accent-blue);">4.9 / 5.0</strong> ⭐ (1.200+ avaliações)</p>
-            <div class="products-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));" id="reviews-container"></div>
-        </div>
-    </main>
-
-    <!-- 4. PÁGINA COMO FUNCIONA -->
-    <main id="page-how-it-works" class="page-view">
-        <div class="container">
-            <h2 class="section-title">COMO FUNCIONA?</h2>
-            <p class="section-subtitle">Siga os passos abaixo para receber seus itens com rapidez</p>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
-                <div class="stat-card">
-                    <h1 style="color:var(--accent-blue);">01</h1>
-                    <h4 style="margin:10px 0;">Escolha o Produto</h4>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">Navegue pelas categorias e selecione a fruta ou item desejado.</p>
-                </div>
-                <div class="stat-card">
-                    <h1 style="color:var(--accent-blue);">02</h1>
-                    <h4 style="margin:10px 0;">Adicione ao Carrinho</h4>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">Adicione quantos itens quiser observando o estoque disponível.</p>
-                </div>
-                <div class="stat-card">
-                    <h1 style="color:var(--accent-blue);">03</h1>
-                    <h4 style="margin:10px 0;">Confira o Pedido</h4>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">Abra o carrinho e verifique se as quantidades estão corretas.</p>
-                </div>
-                <div class="stat-card">
-                    <h1 style="color:var(--accent-blue);">04</h1>
-                    <h4 style="margin:10px 0;">Faça o Pagamento</h4>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">Pague com PIX com aprovação instantânea via QR Code.</p>
-                </div>
-                <div class="stat-card">
-                    <h1 style="color:var(--accent-blue);">05</h1>
-                    <h4 style="margin:10px 0;">Receba o Produto</h4>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">Sua entrega é concluída diretamente com a nossa equipe online.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- 5. PÁGINA SUPORTE -->
-    <main id="page-support" class="page-view">
-        <div class="container">
-            <h2 class="section-title">CENTRAL DE SUPORTE</h2>
-            <p class="section-subtitle">Estamos online para ajudar com o seu pedido</p>
-
-            <div style="max-width:800px; margin: 0 auto; display:flex; flex-direction:column; gap:20px;">
-                <div class="stat-card" style="text-align:left;">
-                    <h3><i class="fa-solid fa-circle-question" style="color:var(--accent-blue);"></i> Dúvidas Frequentes</h3>
-                    <div style="margin-top:15px; display:flex; flex-direction:column; gap:10px;">
-                        <details style="background:rgba(7,9,19,0.8); padding:10px; border-radius:8px;"><summary style="cursor:pointer; font-weight:700;">Quanto tempo demora a entrega?</summary><p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted);">As entregas são feitas via Trade no jogo e costumam levar de 5 a 15 minutos quando nossa equipe está online.</p></details>
-                        <details style="background:rgba(7,9,19,0.8); padding:10px; border-radius:8px;"><summary style="cursor:pointer; font-weight:700;">O pagamento via PIX é automático?</summary><p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted);">Sim! O pagamento via PIX é aprovado automaticamente pelo sistema em poucos segundos após a confirmação.</p></details>
-                        <details style="background:rgba(7,9,19,0.8); padding:10px; border-radius:8px;"><summary style="cursor:pointer; font-weight:700;">É seguro comprar Robux e Frutas aqui?</summary><p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted);">Totalmente seguro! Trabalhamos apenas com métodos 100% oficiais e seguros, sem riscos para a sua conta Roblox.</p></details>
-                    </div>
-                </div>
-
-                <div class="stat-card" style="text-align:center;">
-                    <h3>Precisa de Atendimento Humano?</h3>
-                    <p style="color:var(--text-muted); margin: 10px 0 20px;">Nossa equipe de suporte está pronta para te atender no Discord ou via Chat.</p>
-                    <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
-                        <a href="https://discord.gg" target="_blank" class="btn" style="background:#5865F2;"><i class="fa-brands fa-discord"></i> ENTRAR NO DISCORD</a>
-                        <button class="btn btn-outline" onclick="navigateTo('team')"><i class="fa-solid fa-headset"></i> CHAT DE SUPORTE</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- 6. PÁGINA EQUIPE & CHAT EM TEMPO REAL -->
-    <main id="page-team" class="page-view">
-        <div class="container">
-            <h2 class="section-title">CENTRAL DA EQUIPE & SUPORTE LIVE</h2>
-            <p class="section-subtitle">Acompanhe os atendedores online e solicite suporte direto</p>
-
-            <div class="team-status-list">
-                <h4 style="margin-bottom:15px; display:flex; align-items:center; gap:10px;">
-                    <span class="online-dot"></span> MENTORES E ATENDEDORES ONLINE
-                </h4>
-                <div style="display:flex; gap:20px; flex-wrap:wrap;" id="team-members-list">
-                    <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); padding:8px 15px; border-radius:10px; border:1px solid var(--border-light);">
-                        <span class="online-dot"></span>
-                        <strong>ThulerX (Dono)</strong>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.03); padding:8px 15px; border-radius:10px; border:1px solid var(--border-light);">
-                        <span class="online-dot"></span>
-                        <strong>Suporte_Robux01</strong>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sala de Chamada de Voz / Atendimento simulado -->
-            <div class="call-container" style="margin-bottom:30px;">
-                <h3><i class="fa-solid fa-microphone" style="color:var(--accent-blue);"></i> Canal de Voz de Suporte Rapid</h3>
-                <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">Conecte-se para tirar dúvidas por áudio diretamente com um atendedor</p>
-                <div class="call-members-grid">
-                    <div class="call-member-card">
-                        <div class="call-avatar-frame speaking">
-                            <i class="fa-solid fa-headset" style="font-size:1.8rem; color:var(--accent-blue);"></i>
-                        </div>
-                        <span style="font-size:0.85rem; font-weight:700;">Atendedor Thuler</span>
-                    </div>
-                    <div class="call-member-card">
-                        <div class="call-avatar-frame">
-                            <i class="fa-solid fa-user" style="font-size:1.8rem; color:var(--text-muted);"></i>
-                        </div>
-                        <span style="font-size:0.85rem; font-weight:700;">Você</span>
-                    </div>
-                </div>
-                <button class="btn btn-outline" id="call-toggle-btn" onclick="toggleSupportCall()"><i class="fa-solid fa-phone"></i> Entrar na Chamada</button>
-            </div>
-
-            <!-- Chat do Suporte em Tempo Real -->
-            <div style="background:var(--bg-card); border-radius:16px; padding:20px; border:1px solid var(--border-glow);">
-                <h4 style="margin-bottom:15px;"><i class="fa-solid fa-comments" style="color:var(--accent-blue);"></i> Chat de Atendimento ao Vivo</h4>
-                <div class="chat-box" id="team-chat-box">
-                    <div class="chat-msg">
-                        <strong style="color:var(--accent-blue); display:block; font-size:0.75rem;">Suporte ThulerX • 14:20</strong>
-                        Olá! Como posso te ajudar com seu pedido hoje?
-                    </div>
-                </div>
-                <div style="display:flex; gap:10px;">
-                    <input type="text" id="chat-input" placeholder="Digite sua mensagem..." style="flex:1; padding:12px; background:rgba(7,9,19,0.9); border:1px solid var(--border-light); border-radius:10px; color:#fff;" onkeypress="if(event.key==='Enter') sendChatMessage()">
-                    <button class="btn" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- 7. PÁGINA PERFIL DE USUÁRIO -->
-    <main id="page-profile" class="page-view">
-        <div class="container" style="max-width:800px;">
-            <div class="stat-card" style="text-align:left; margin-bottom:30px;">
-                <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
-                    <div style="width:80px; height:80px; border-radius:50%; background:rgba(0,240,255,0.1); border:2px solid var(--accent-blue); display:flex; align-items:center; justify-content:center;">
-                        <i class="fa-solid fa-user" style="font-size:2.5rem; color:var(--accent-blue);" id="profile-avatar-icon"></i>
-                        <img id="profile-avatar-img" src="" style="width:100%; height:100%; border-radius:50%; display:none; object-fit:cover;">
-                    </div>
-                    <div>
-                        <h2 id="profile-name" style="font-family:var(--font-heading); font-size:2rem;">Usuário Visitante</h2>
-                        <p id="profile-email" style="color:var(--text-muted); font-size:0.9rem;">Faça login para ver seu histórico de compras</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stat-card" style="text-align:left;">
-                <h3 style="margin-bottom:20px;"><i class="fa-solid fa-clock-rotate-left" style="color:var(--accent-blue);"></i> Meus Pedidos</h3>
-                <div id="order-history-list" style="display:flex; flex-direction:column; gap:12px;">
-                    <p style="color:var(--text-muted); font-size:0.9rem;">Nenhum pedido realizado ainda.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- 8. PÁGINA ADMIN (PAINEL ADMINISTRATIVO) -->
-    <main id="page-admin" class="page-view">
-        <div class="container">
-            <h2 class="section-title">PAINEL ADMINISTRATIVO</h2>
-            <p class="section-subtitle">Gerenciamento de Produtos, Vendas e Atendimento</p>
-
-            <div class="admin-grid">
-                <div class="admin-sidebar">
-                    <button class="admin-menu-btn active" onclick="switchAdminTab('products', this)"><i class="fa-solid fa-box"></i> Produtos</button>
-                    <button class="admin-menu-btn" onclick="switchAdminTab('orders', this)"><i class="fa-solid fa-receipt"></i> Pedidos</button>
-                    <button class="admin-menu-btn" onclick="switchAdminTab('users', this)"><i class="fa-solid fa-users"></i> Usuários</button>
-                </div>
-
-                <div class="admin-content">
-                    <!-- Tab Produtos -->
-                    <div id="admin-tab-products">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                            <h4>Gerenciar Produtos</h4>
-                            <button class="btn" style="padding:8px 16px; font-size:0.85rem;" onclick="openAddProductModal()"><i class="fa-solid fa-plus"></i> Novo Produto</button>
-                        </div>
-                        <div style="overflow-x:auto;">
-                            <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem;">
-                                <thead>
-                                    <tr style="border-bottom:1px solid var(--border-light); color:var(--text-muted);">
-                                        <th style="padding:10px;">Item</th>
-                                        <th style="padding:10px;">Categoria</th>
-                                        <th style="padding:10px;">Preço</th>
-                                        <th style="padding:10px;">Estoque</th>
-                                        <th style="padding:10px;">Ação</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="admin-products-table">
-                                    <!-- Preenchido via JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Tab Pedidos -->
-                    <div id="admin-tab-orders" style="display:none;">
-                        <h4>Pedidos Recentes</h4>
-                        <div id="admin-orders-list" style="margin-top:15px; font-size:0.85rem; color:var(--text-muted);">
-                            Nenhum pedido registrado no momento.
-                        </div>
-                    </div>
-
-                    <!-- Tab Usuários -->
-                    <div id="admin-tab-users" style="display:none;">
-                        <h4>Usuários Registrados</h4>
-                        <p style="margin-top:10px; font-size:0.85rem; color:var(--text-muted);">Sessões ativas via Firebase Auth.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- ==========================================================================
-       9. CARRINHO LATERAL (DRAWER) & MODAIS
-       ========================================================================== -->
-    <div class="cart-drawer" id="cart-drawer">
-        <div class="cart-header">
-            <h3><i class="fa-solid fa-cart-shopping" style="color:var(--accent-blue);"></i> Seu Carrinho</h3>
-            <button class="icon-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-
-        <div class="cart-items" id="cart-items-container">
-            <!-- Renderizado via JS -->
-        </div>
-
-        <div style="border-top: 1px solid var(--border-light); padding-top: 20px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:700;">
-                <span>Total:</span>
-                <span id="cart-total-price" style="color:var(--accent-blue); font-size:1.2rem;">R$ 0,00</span>
-            </div>
-            <button class="btn" style="width:100%;" id="btn-checkout" onclick="openCheckoutModal()">FINALIZAR COMPRA VIA PIX</button>
-        </div>
-    </div>
-
-    <!-- MODAL DE CHECKOUT / PIX -->
-    <div class="modal" id="modal-checkout">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h3>Finalizar Compra via PIX</h3>
-            <button class="icon-btn" onclick="closeAllModals()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div style="text-align:center;">
-            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px;">Escaneie o QR Code abaixo ou copie a chave PIX para efetuar o pagamento:</p>
-            <div style="background:#fff; padding:15px; border-radius:12px; display:inline-block; margin-bottom:15px;">
-                <i class="fa-solid fa-qrcode" style="font-size:8rem; color:#000;"></i>
-            </div>
-            <div class="form-group">
-                <label>Chave PIX Copia e Cola:</label>
-                <input type="text" readonly value="00020126360014BR.GOV.BCB.PIX0114thulerxstorepix520400005303986540410.005802BR5913THULERX STORE6009SAO PAULO62070503***6304E2D1" id="pix-key-input">
-            </div>
-            <button class="btn btn-outline" style="width:100%; margin-bottom:10px;" onclick="copyPixKey()"><i class="fa-regular fa-copy"></i> Copiar Chave PIX</button>
-            <button class="btn" style="width:100%;" onclick="confirmPayment()"><i class="fa-solid fa-check"></i> Já Fiz o Pagamento</button>
-        </div>
-    </div>
-
-    <!-- MODAL ADICIONAR PRODUTO (ADMIN) -->
-    <div class="modal" id="modal-add-product">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h3>Adicionar Novo Produto</h3>
-            <button class="icon-btn" onclick="closeAllModals()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <form onsubmit="saveProduct(event)">
-            <div class="form-group">
-                <label>Nome do Produto</label>
-                <input type="text" id="prod-name" required placeholder="Ex: Fruta Kitsune Física">
-            </div>
-            <div class="form-group">
-                <label>Categoria</label>
-                <select id="prod-category">
-                    <option value="blox-fruits">Blox Fruits</option>
-                    <option value="frutas-fisicas">Frutas Físicas</option>
-                    <option value="frutas-permanentes">Frutas Permanentes</option>
-                    <option value="robux">Robux</option>
-                    <option value="ofertas">Ofertas</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Preço (R$)</label>
-                <input type="number" step="0.01" id="prod-price" required placeholder="29.90">
-            </div>
-            <div class="form-group">
-                <label>Estoque</label>
-                <input type="number" id="prod-stock" required value="10">
-            </div>
-            <div class="form-group">
-                <label>Tag em Destaque</label>
-                <select id="prod-badge">
-                    <option value="">Nenhuma</option>
-                    <option value="badge-hot">HOT</option>
-                    <option value="badge-new">NOVO</option>
-                    <option value="badge-low">POUCAS UNIDADES</option>
-                </select>
-            </div>
-            <button type="submit" class="btn" style="width:100%;">Salvar Produto</button>
-        </form>
-    </div>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="container footer-grid">
-            <div>
-                <a class="logo" style="margin-bottom:15px;">THULERX<span>STORE</span></a>
-                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.6;">O melhor marketplace para itens Roblox, entregas garantidas, suporte humanizado em tempo real e os melhores preços do mercado.</p>
-            </div>
-            <div>
-                <h4 style="margin-bottom:15px; color:#fff;">Navegação</h4>
-                <ul style="list-style:none; font-size:0.85rem; display:flex; flex-direction:column; gap:8px;">
-                    <li><a onclick="navigateTo('home')" style="color:var(--text-muted); cursor:pointer;">Início</a></li>
-                    <li><a onclick="navigateTo('catalog')" style="color:var(--text-muted); cursor:pointer;">Produtos</a></li>
-                    <li><a onclick="navigateTo('reviews')" style="color:var(--text-muted); cursor:pointer;">Avaliações</a></li>
-                    <li><a onclick="navigateTo('how-it-works')" style="color:var(--text-muted); cursor:pointer;">Como Funciona</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 style="margin-bottom:15px; color:#fff;">Atendimento</h4>
-                <ul style="list-style:none; font-size:0.85rem; display:flex; flex-direction:column; gap:8px; color:var(--text-muted);">
-                    <li><i class="fa-solid fa-clock"></i> Seg - Dom: 10:00 às 22:00</li>
-                    <li><i class="fa-brands fa-discord"></i> Comunidade Discord</li>
-                    <li><i class="fa-solid fa-shield-check"></i> Compra 100% Protegida</li>
-                </ul>
-            </div>
-            <div>
-                <h4 style="margin-bottom:15px; color:#fff;">Formas de Pagamento</h4>
-                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:10px;">Pagamentos instantâneos via PIX:</p>
-                <i class="fa-solid fa-pix" style="font-size:2rem; color:var(--accent-blue);"></i>
-            </div>
-        </div>
-        <div style="text-align:center; border-top:1px solid var(--border-light); padding-top:20px; font-size:0.8rem; color:var(--text-muted);">
-            &copy; 2026 THULERX STORE. Todos os direitos reservados. Não associado diretamente com a Roblox Corporation.
-        </div>
-    </footer>
-
-    <!-- ==========================================================================
-       10. SCRIPTS E LÓGICA SPA / FIREBASE / CARRINHO
-       ========================================================================== -->
-    <script>
-        /* CONFIGURAÇÃO DO FIREBASE */
-        const firebaseConfig = {
-            apiKey: "AIzaSyYOUR_API_KEY_HERE",
-            authDomain: "thulerx-store.firebaseapp.com",
-            databaseURL: "https://thulerx-store-default-rtdb.firebaseio.com",
-            projectId: "thulerx-store",
-            storageBucket: "thulerx-store.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef"
-        };
-
-        // Inicializa o Firebase
-        try {
-            firebase.initializeApp(firebaseConfig);
-        } catch (e) {
-            console.log("Firebase carregado em modo demonstrativo.");
-        }
-
-        /* ESTADO DA APLICAÇÃO (STATE) */
-        let currentUser = null;
-        let cart = [];
-        let currentCategory = 'all';
-
-        // Produtos Base (Mock Data)
-        let products = [
-            { id: 1, name: '1.000 Robux (Via Gamepass)', category: 'robux', price: 35.00, stock: 50, badge: 'badge-hot', icon: 'fa-coins' },
-            { id: 2, name: 'Fruta Kitsune (Física)', category: 'frutas-fisicas', price: 45.00, stock: 5, badge: 'badge-hot', icon: 'fa-apple-whole' },
-            { id: 3, name: 'Fruta Dragon (Física)', category: 'frutas-fisicas', price: 39.90, stock: 8, badge: 'badge-low', icon: 'fa-dragon' },
-            { id: 4, name: 'Fruta Dough Permanência', category: 'frutas-permanentes', price: 120.00, stock: 3, badge: 'badge-new', icon: 'fa-lock' },
-            { id: 5, name: 'Fruta Buddha (Física)', category: 'frutas-fisicas', price: 15.00, stock: 20, badge: '', icon: 'fa-apple-whole' },
-            { id: 6, name: 'Combo 5.000 Robux', category: 'ofertas', price: 150.00, stock: 10, badge: 'badge-hot', icon: 'fa-fire' }
-        ];
-
-        const reviewsData = [
-            { name: "Gabriel S.", rating: 5, comment: "Chegou muito rápido! Em menos de 5 minutos o Robux já tava na conta.", date: "Hoje" },
-            { name: "Lucas_Roblox", rating: 5, comment: "Comprei a Kitsune física e deu tudo certo na trade. Vendedor super confiável!", date: "Ontem" },
-            { name: "Matheus M.", rating: 5, comment: "Melhor loja disparado! Preço muito mais em conta do que no site oficial.", date: "Há 2 dias" }
-        ];
-
-        /* INICIALIZAÇÃO DA PÁGINA */
-        window.addEventListener('DOMContentLoaded', () => {
-            initCanvasBackground();
-            renderHomeOffers();
-            renderCatalog();
-            renderReviews();
-            renderAdminProducts();
+          <!-- Conteúdo Principal -->
+          <main className="flex-1 overflow-y-auto p-10">
             
-            // Simular término do carregamento
-            setTimeout(() => {
-                const preloader = document.getElementById('preloader');
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 600);
-            }, 1000);
+            <!-- ABA PRODUTOS -->
+            {activeTab === 'produtos' && (
+              <section className="max-w-4xl mx-auto">
+                <h1 className="text-2xl font-bold mb-1 text-gray-900">Gerenciamento de Produtos</h1>
+                <p className="text-sm text-gray-400 mb-8">Adicione, edite ou remova produtos do seu catálogo.</p>
 
-            // Listener do Auth Estado
-            if (window.firebase && firebase.auth) {
-                firebase.auth().onAuthStateChanged(user => {
-                    if (user) {
-                        currentUser = user;
-                        updateUserUI(true);
-                    } else {
-                        currentUser = null;
-                        updateUserUI(false);
-                    }
-                });
-            }
-        });
+                <!-- Form Produto -->
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 mb-8 flex flex-col md:flex-row gap-4 items-end shadow-sm">
+                  <div className="flex-1 w-full">
+                    <label className="text-xs font-medium text-gray-500 block mb-1">Nome do Produto</label>
+                    <input 
+                      type="text" 
+                      value={prodName}
+                      onChange={(e) => setProdName(e.target.value)}
+                      placeholder="Ex: Fone Sem Fio"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#0084FF]"
+                    />
+                  </div>
+                  
+                  <div className="w-full md:w-48">
+                    <label className="text-xs font-medium text-gray-500 block mb-1">Categoria</label>
+                    <select
+                      value={prodCategory}
+                      onChange={(e) => setProdCategory(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#0084FF] bg-white"
+                    >
+                      <option value="">Selecione...</option>
+                      {categories.map(c => (
+                        <option key={c.id} value={c.name}>{c.name}</option>
+                      ))}
+                    </select>
+                  </div>
 
-        /* NAVEGAÇÃO SPA */
-        function navigateTo(pageId) {
-            const pages = document.querySelectorAll('.page-view');
-            pages.forEach(p => p.classList.remove('active'));
+                  <div className="w-full md:w-36">
+                    <label className="text-xs font-medium text-gray-500 block mb-1">Preço</label>
+                    <input 
+                      type="text" 
+                      value={prodPrice}
+                      onChange={(e) => setProdPrice(e.target.value)}
+                      placeholder="R$ 0,00"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#0084FF]"
+                    />
+                  </div>
 
-            const target = document.getElementById(`page-${pageId}`);
-            if (target) {
-                target.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+                  <button 
+                    onClick={handleSaveProduct}
+                    className="w-full md:w-auto bg-[#0084FF] hover:bg-[#0073E6] text-white px-6 py-2.5 rounded-xl text-sm font-medium flex items-center justify-center gap-2 transition-all"
+                  >
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    {editingProdId ? 'Atualizar' : 'Criar'}
+                  </button>
+                </div>
 
-            // Atualiza links ativos na Navbar
-            const links = document.querySelectorAll('.nav-links a');
-            links.forEach(l => l.classList.remove('active'));
-            const activeLink = document.getElementById(`nav-${pageId}`);
-            if (activeLink) activeLink.classList.add('active');
+                <!-- Tabela de Produtos -->
+                <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-gray-100 text-xs text-gray-400 uppercase font-medium bg-gray-50/50">
+                        <th className="p-4 pl-6">Nome</th>
+                        <th className="p-4">Categoria</th>
+                        <th className="p-4">Preço</th>
+                        <th className="p-4 text-right pr-6">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50 text-sm">
+                      {products.map((item) => (
+                        <tr key={item.id} className="hover:bg-gray-50/50 transition-all">
+                          <td className="p-4 pl-6 font-medium text-gray-800">{item.name}</td>
+                          <td className="p-4 text-gray-500">{item.category}</td>
+                          <td className="p-4 font-semibold text-[#0084FF]">{item.price}</td>
+                          <td className="p-4 text-right pr-6 space-x-2">
+                            <button 
+                              onClick={() => handleEditProduct(item)}
+                              className="p-2 hover:bg-gray-100 rounded-lg text-gray-500 transition-all"
+                            >
+                              <i data-lucide="pencil" class="w-4 h-4"></i>
+                            </button>
+                            <button 
+                              onClick={() => handleDeleteProduct(item.id)}
+                              className="p-2 hover:bg-red-50 rounded-lg text-red-500 transition-all"
+                            >
+                              <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            )}
 
-            // Fecha menu mobile se aberto
-            document.getElementById('nav-links').classList.remove('active');
-        }
+            <!-- ABA CATEGORIAS -->
+            {activeTab === 'categorias' && (
+              <section className="max-w-4xl mx-auto">
+                <h1 className="text-2xl font-bold mb-1 text-gray-900">Gerenciamento de Categorias</h1>
+                <p className="text-sm text-gray-400 mb-8">Organize os produtos em grupos organizados.</p>
 
-        function toggleMobileMenu() {
-            document.getElementById('nav-links').classList.toggle('active');
-        }
+                <!-- Form Categoria -->
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 mb-8 flex flex-col md:flex-row gap-4 items-end shadow-sm">
+                  <div className="flex-1 w-full">
+                    <label className="text-xs font-medium text-gray-500 block mb-1">Nome da Categoria</label>
+                    <input 
+                      type="text" 
+                      value={catName}
+                      onChange={(e) => setCatName(e.target.value)}
+                      placeholder="Ex: Eletrônicos"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#0084FF]"
+                    />
+                  </div>
 
-        /* SISTEMA DE CATEGORIAS */
-        function switchCategory(cat, btn) {
-            currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-            renderCatalog();
-        }
+                  <div className="flex-1 w-full">
+                    <label className="text-xs font-medium text-gray-500 block mb-1">Descrição</label>
+                    <input 
+                      type="text" 
+                      value={catDesc}
+                      onChange={(e) => setCatDesc(e.target.value)}
+                      placeholder="Breve resumo da categoria"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#0084FF]"
+                    />
+                  </div>
 
-        /* RENDERIZAÇÃO DE CONTEÚDO */
-        function renderHomeOffers() {
-            const container = document.getElementById('home-offers-grid');
-            const offers = products.filter(p => p.category === 'ofertas' || p.badge === 'badge-hot').slice(0, 4);
-            container.innerHTML = offers.map(p => createProductCardHTML(p)).join('');
-        }
+                  <button 
+                    onClick={handleSaveCategory}
+                    className="w-full md:w-auto bg-[#0084FF] hover:bg-[#0073E6] text-white px-6 py-2.5 rounded-xl text-sm font-medium flex items-center justify-center gap-2 transition-all"
+                  >
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    {editingCatId ? 'Atualizar' : 'Criar'}
+                  </button>
+                </div>
 
-        function renderCatalog() {
-            const container = document.getElementById('catalog-content-area');
-            const filtered = currentCategory === 'all' 
-                ? products 
-                : products.filter(p => p.category === currentCategory);
-
-            if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="coming-soon-card">
-                        <i class="fa-solid fa-box-open" style="font-size:3rem; color:var(--text-muted); margin-bottom:10px;"></i>
-                        <h3>Nenhum produto nesta categoria no momento</h3>
-                        <p style="color:var(--text-muted);">Volte em breve para conferir novos estoques!</p>
-                    </div>`;
-                return;
-            }
-
-            container.innerHTML = `<div class="products-grid">${filtered.map(p => createProductCardHTML(p)).join('')}</div>`;
-        }
-
-        function createProductCardHTML(p) {
-            const badgeHTML = p.badge 
-                ? `<span class="badge ${p.badge}">${p.badge === 'badge-hot' ? '🔥 HOT' : p.badge === 'badge-new' ? 'NOVO' : 'POUCO ESTOQUE'}</span>` 
-                : '';
-            
-            return `
-                <div class="product-card">
-                    <div>
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                            ${badgeHTML}
-                            <span style="font-size:0.75rem; color:var(--text-muted);"><i class="fa-solid fa-cubes"></i> Est.: ${p.stock}</span>
-                        </div>
-                        <div class="product-img-wrapper">
-                            <i class="fa-solid ${p.icon || 'fa-box'}"></i>
-                        </div>
-                        <h4 style="font-size:1.1rem; margin-bottom:8px;">${p.name}</h4>
-                    </div>
-                    <div>
-                        <div style="font-family:var(--font-heading); font-size:1.8rem; color:var(--accent-blue); margin-bottom:12px;">
-                            R$ ${p.price.toFixed(2)}
-                        </div>
-                        <button class="btn" style="width:100%;" onclick="addToCart(${p.id})">
-                            <i class="fa-solid fa-cart-plus"></i> ADICIONAR
+                <!-- Lista de Categorias -->
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {categories.map((cat) => (
+                    <div key={cat.id} className="bg-white p-5 rounded-2xl border border-gray-100 flex items-center justify-between shadow-sm">
+                      <div>
+                        <h3 className="font-semibold text-gray-800">{cat.name}</h3>
+                        <p className="text-xs text-gray-400 mt-1">{cat.description}</p>
+                      </div>
+                      <div className="flex gap-1">
+                        <button 
+                          onClick={() => handleEditCategory(cat)}
+                          className="p-2 hover:bg-gray-100 rounded-lg text-gray-500 transition-all"
+                        >
+                          <i data-lucide="pencil" class="w-4 h-4"></i>
                         </button>
+                        <button 
+                          onClick={() => handleDeleteCategory(cat.id)}
+                          className="p-2 hover:bg-red-50 rounded-lg text-red-500 transition-all"
+                        >
+                          <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                      </div>
                     </div>
+                  ))}
                 </div>
-            `;
-        }
+              </section>
+            )}
 
-        function renderReviews() {
-            const container = document.getElementById('reviews-container');
-            container.innerHTML = reviewsData.map(r => `
-                <div class="product-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <strong>${r.name}</strong>
-                        <span style="font-size:0.8rem; color:var(--text-muted);">${r.date}</span>
-                    </div>
-                    <div style="color:#ffcc00; margin-bottom:10px;">
-                        ${'★'.repeat(r.rating)}
-                    </div>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">${r.comment}</p>
+            <!-- ABA SISTEMA DE CALL -->
+            {activeTab === 'calls' && (
+              <section className="max-w-4xl mx-auto">
+                <h1 className="text-2xl font-bold mb-1 text-gray-900">Sistema de Chamadas em Equipe</h1>
+                <p className="text-sm text-gray-400 mb-8">Inicie reuniões com voz, vídeo e compartilhamento de tela instantâneos.</p>
+
+                <div className="bg-white p-10 rounded-2xl border border-gray-100 text-center max-w-lg mx-auto shadow-sm">
+                  <div className="w-16 h-16 bg-[#0084FF]/10 text-[#0084FF] rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="video" class="w-8 h-8"></i>
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-800 mb-2">Sala de Reunião Direta</h2>
+                  <p className="text-xs text-gray-400 mb-6 leading-relaxed">
+                    Clique no botão abaixo para abrir a sala virtual da equipe. Qualquer pessoa da sua equipe que clicar no mesmo botão entrará na mesma chamada.
+                  </p>
+                  
+                  <a 
+                    href="https://meet.jit.si/PainelAdminEquipeMinhaCallExclusiva" 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-[#0084FF] hover:bg-[#0073E6] text-white py-3.5 px-6 rounded-xl font-medium transition-all shadow-md shadow-[#0084FF]/20"
+                  >
+                    <i data-lucide="phone-call" class="w-5 h-5"></i> Entrar na Reunião Agora
+                  </a>
                 </div>
-            `).join('');
-        }
+              </section>
+            )}
 
-        /* GERENCIAMENTO DO CARRINHO */
-        function toggleCart() {
-            document.getElementById('cart-drawer').classList.toggle('active');
-        }
+          </main>
+        </div>
+      );
+    }
 
-        function addToCart(productId) {
-            const prod = products.find(p => p.id === productId);
-            if (!prod) return;
-
-            const cartItem = cart.find(item => item.id === productId);
-            if (cartItem) {
-                if (cartItem.qty < prod.stock) {
-                    cartItem.qty++;
-                } else {
-                    showToast("Limite de estoque atingido!", "error");
-                    return;
-                }
-            } else {
-                cart.push({ ...prod, qty: 1 });
-            }
-
-            updateCartUI();
-            showToast(`${prod.name} adicionado ao carrinho!`);
-            
-            // Animação no ícone do carrinho
-            const cartBtn = document.getElementById('cart-icon-btn');
-            cartBtn.classList.add('cart-pop-anim');
-            setTimeout(() => cartBtn.classList.remove('cart-pop-anim'), 300);
-        }
-
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if (!item) return;
-
-            item.qty += delta;
-            if (item.qty <= 0) {
-                cart = cart.filter(i => i.id !== id);
-            }
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const container = document.getElementById('cart-items-container');
-            const countEl = document.getElementById('cart-count');
-            const totalEl = document.getElementById('cart-total-price');
-
-            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-
-            countEl.innerText = totalItems;
-            totalEl.innerText = `R$ ${totalPrice.toFixed(2)}`;
-
-            if (cart.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-cart-state">
-                        <i class="fa-solid fa-cart-flatbed"></i>
-                        <p style="color:var(--text-muted);">Seu carrinho está vazio.</p>
-                    </div>`;
-                return;
-            }
-
-            container.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <div style="flex:1;">
-                        <h5 style="font-size:0.9rem;">${item.name}</h5>
-                        <span style="color:var(--accent-blue); font-weight:700; font-size:0.85rem;">R$ ${(item.price * item.qty).toFixed(2)}</span>
-                        <div class="cart-item-qty">
-                            <button onclick="changeQty(${item.id}, -1)">-</button>
-                            <span style="font-size:0.85rem;">${item.qty}</span>
-                            <button onclick="changeQty(${item.id}, 1)">+</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        /* AUTH & MODAIS */
-        function handleAuthAction() {
-            if (currentUser) {
-                if (confirm("Deseja encerrar sua sessão?")) {
-                    if (window.firebase && firebase.auth) firebase.auth().signOut();
-                    updateUserUI(false);
-                }
-            } else {
-                // Simulação de login / Firebase Auth
-                if (window.firebase && firebase.auth) {
-                    const provider = new firebase.auth.GoogleAuthProvider();
-                    firebase.auth().signInWithPopup(provider).catch(() => {
-                        simulateMockLogin();
-                    });
-                } else {
-                    simulateMockLogin();
-                }
-            }
-        }
-
-        function simulateMockLogin() {
-            currentUser = { displayName: "Cliente ThulerX", email: "cliente@roblox.com" };
-            updateUserUI(true);
-            showToast("Login efetuado com sucesso!");
-        }
-
-        function updateUserUI(isLoggedIn) {
-            const authBtn = document.getElementById('auth-btn');
-            const profileName = document.getElementById('profile-name');
-            const profileEmail = document.getElementById('profile-email');
-            const adminNav = document.getElementById('admin-nav-link');
-            const teamNav = document.getElementById('team-nav-link');
-
-            if (isLoggedIn && currentUser) {
-                authBtn.innerText = "Sair";
-                profileName.innerText = currentUser.displayName || "Usuário Registrado";
-                profileEmail.innerText = currentUser.email || "";
-                adminNav.style.display = "block"; // Habilita acesso ao admin para teste
-                teamNav.style.display = "block";
-            } else {
-                authBtn.innerText = "Entrar com Google";
-                profileName.innerText = "Usuário Visitante";
-                profileEmail.innerText = "Faça login para ver seu histórico de compras";
-                adminNav.style.display = "none";
-                teamNav.style.display = "none";
-            }
-        }
-
-        function openCheckoutModal() {
-            if (cart.length === 0) {
-                showToast("Adicione ao menos um item ao carrinho!", "error");
-                return;
-            }
-            document.getElementById('overlay').classList.add('active');
-            document.getElementById('modal-checkout').classList.add('active');
-        }
-
-        function closeAllModals() {
-            document.getElementById('overlay').classList.remove('active');
-            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-        }
-
-        function copyPixKey() {
-            const input = document.getElementById('pix-key-input');
-            input.select();
-            document.execCommand('copy');
-            showToast("Chave PIX copiada!");
-        }
-
-        function confirmPayment() {
-            closeAllModals();
-            toggleCart();
-            cart = [];
-            updateCartUI();
-            showToast("Pagamento recebido! Seu pedido está em processamento.");
-            navigateTo('profile');
-        }
-
-        /* SUPORTE / CALL & CHAT SIMULATION */
-        let inCall = false;
-        function toggleSupportCall() {
-            inCall = !inCall;
-            const btn = document.getElementById('call-toggle-btn');
-            if (inCall) {
-                btn.innerHTML = `<i class="fa-solid fa-phone-slash"></i> Sair da Chamada`;
-                btn.style.borderColor = `#ff3366`;
-                btn.style.color = `#ff3366`;
-                showToast("Conectado à chamada de suporte por voz!");
-            } else {
-                btn.innerHTML = `<i class="fa-solid fa-phone"></i> Entrar na Chamada`;
-                btn.style.borderColor = `var(--border-glow)`;
-                btn.style.color = `var(--text-main)`;
-                showToast("Você saiu da chamada.");
-            }
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const msg = input.value.trim();
-            if (!msg) return;
-
-            const chatBox = document.getElementById('team-chat-box');
-            chatBox.innerHTML += `
-                <div class="chat-msg self">
-                    <strong style="color:#fff; display:block; font-size:0.75rem;">Você</strong>
-                    ${msg}
-                </div>
-            `;
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            // Resposta automática simulada
-            setTimeout(() => {
-                chatBox.innerHTML += `
-                    <div class="chat-msg">
-                        <strong style="color:var(--accent-blue); display:block; font-size:0.75rem;">Suporte ThulerX</strong>
-                        Recebemos sua mensagem! Um atendente já vai verificar seu caso.
-                    </div>
-                `;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 1000);
-        }
-
-        /* PAINEL ADMIN FUNCTIONS */
-        function switchAdminTab(tab, btn) {
-            document.querySelectorAll('.admin-menu-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            document.getElementById('admin-tab-products').style.display = tab === 'products' ? 'block' : 'none';
-            document.getElementById('admin-tab-orders').style.display = tab === 'orders' ? 'block' : 'none';
-            document.getElementById('admin-tab-users').style.display = tab === 'users' ? 'block' : 'none';
-        }
-
-        function renderAdminProducts() {
-            const table = document.getElementById('admin-products-table');
-            table.innerHTML = products.map(p => `
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
-                    <td style="padding:10px;">${p.name}</td>
-                    <td style="padding:10px;">${p.category}</td>
-                    <td style="padding:10px; color:var(--accent-blue);">R$ ${p.price.toFixed(2)}</td>
-                    <td style="padding:10px;">${p.stock}</td>
-                    <td style="padding:10px;">
-                        <button onclick="deleteProduct(${p.id})" style="background:none; border:none; color:#ff3366; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function openAddProductModal() {
-            document.getElementById('overlay').classList.add('active');
-            document.getElementById('modal-add-product').classList.add('active');
-        }
-
-        function saveProduct(e) {
-            e.preventDefault();
-            const name = document.getElementById('prod-name').value;
-            const category = document.getElementById('prod-category').value;
-            const price = parseFloat(document.getElementById('prod-price').value);
-            const stock = parseInt(document.getElementById('prod-stock').value);
-            const badge = document.getElementById('prod-badge').value;
-
-            const newProd = {
-                id: Date.now(),
-                name, category, price, stock, badge,
-                icon: 'fa-box'
-            };
-
-            products.push(newProd);
-            renderAdminProducts();
-            renderCatalog();
-            closeAllModals();
-            showToast("Produto adicionado com sucesso!");
-        }
-
-        function deleteProduct(id) {
-            products = products.filter(p => p.id !== id);
-            renderAdminProducts();
-            renderCatalog();
-            showToast("Produto removido.");
-        }
-
-        /* TOAST NOTIFICATION */
-        function showToast(msg, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color:var(--accent-blue);"></i> <span>${msg}</span>`;
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        /* EFEITO DE PARTÍCULAS / CANVAS BACKGROUND */
-        function initCanvasBackground() {
-            const canvas = document.getElementById('bg-canvas');
-            const ctx = canvas.getContext('2d');
-
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resize();
-            window.addEventListener('resize', resize);
-
-            const particles = Array.from({ length: 40 }, () => ({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2 + 1,
-                speedX: (Math.random() - 0.5) * 0.5,
-                speedY: (Math.random() - 0.5) * 0.5
-            }));
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = 'rgba(0, 240, 255, 0.3)';
-
-                particles.forEach(p => {
-                    p.x += p.speedX;
-                    p.y += p.speedY;
-
-                    if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-                    if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                requestAnimationFrame(animate);
-            }
-            animate();
-        }
-    </script>
+    // Renderiza a aplicação no elemento root
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<AdminDashboard />);
+  </script>
 </body>
 </html>
